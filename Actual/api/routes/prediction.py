@@ -10,8 +10,16 @@ from api.schemas import (
 )
 from api.dependencies import (
     price_model,
-    classification_model,
-    laptop_dataset
+    classification_model
+)
+
+from api.feature_engineering import (
+    get_processor_tier,
+    get_gpu_tier,
+    normalize_gpu,
+    normalize_ssd,
+    normalize_wifi,
+    normalize_bluetooth
 )
 
 
@@ -32,59 +40,30 @@ def predict_price(data: LaptopInput):
     # COMPUTE FEATURES
     # =====================================================
     
+   # =====================================================
+    # NORMALIZE INPUTS
     # =====================================================
-    # FIND CLOSEST MATCH
-    # =====================================================
+    
+    processor = data.processor
+    
+    gpu = normalize_gpu(data.graphic_processor)
+    
+    ssd_type = normalize_ssd(data.ssd_type)
+    
+    wifi = normalize_wifi(data.wi_fi_version)
+    
+    bluetooth = normalize_bluetooth(data.bluetooth_version)
+    
+    processor_tier = get_processor_tier(processor)
+    
+    gpu_tier = get_gpu_tier(gpu)
+    
+    cpu_gpu_combo = f"{processor_tier}_{gpu_tier}"
+    
+    processor_tier = get_processor_tier(processor)
 
-    processor_matches = laptop_dataset[
-        laptop_dataset["Processor"]
-        .str.contains(
-            data.processor,
-            case=False,
-            na=False,
-            regex=False
-        )
-    ]
+    gpu_tier = get_gpu_tier(gpu)
     
-    gpu_matches = processor_matches[
-        processor_matches["Graphic Processor"]
-        .str.contains(
-            data.graphic_processor,
-            case=False,
-            na=False,
-            regex=False
-        )
-    ]
-    
-    if gpu_matches.empty:
-    
-        processor_matches = laptop_dataset[
-            laptop_dataset["Processor"]
-            .str.lower()
-            .str.contains(
-                data.processor.lower().replace("intel ", "").replace("amd ", ""),
-                na=False
-            )
-        ]
-    
-        gpu_matches = processor_matches[
-            processor_matches["Graphic Processor"]
-            .str.lower()
-            .str.contains(
-                data.graphic_processor.lower().replace("nvidia ", "").replace("geforce ", ""),
-                na=False
-            )
-        ]
-    
-    if gpu_matches.empty:
-        raise ValueError(
-            f"Couldn't find {data.processor} + {data.graphic_processor}"
-        )
-    
-    match = gpu_matches.iloc[0]
-    
-    processor_tier = match["Processor Tier"]
-    gpu_tier = match["GPU Tier"]
     cpu_gpu_combo = f"{processor_tier}_{gpu_tier}"
     # =====================================================
     # CREATE INPUT DATAFRAME
@@ -93,19 +72,19 @@ def predict_price(data: LaptopInput):
 
     "Brand": data.brand,
 
-    "Processor": match["Processor"],
+    "Processor": processor,
 
-    "Graphic Processor": match["Graphic Processor"],
+    "Graphic Processor": gpu,
 
     "Capacity": data.capacity,
 
     "RAM Type": data.ram_type,
 
-    "RAM Speed": match["RAM Speed"],
+    "RAM Speed": data.ram_speed,
 
     "SSD Capacity": data.ssd_capacity,
 
-    "SSD Type": match["SSD Type"],
+    "SSD Type": ssd_type,
 
     "Graphics Memory": data.graphics_memory,
 
@@ -117,9 +96,9 @@ def predict_price(data: LaptopInput):
 
     "Warranty": data.warranty,
 
-    "Wi-Fi Version": match["Wi-Fi Version"],
+    "Wi-Fi Version": wifi,
 
-    "Bluetooth Version": match["Bluetooth Version"],
+    "Bluetooth Version": bluetooth,
 
     "Processor Tier": processor_tier,
 
@@ -128,26 +107,35 @@ def predict_price(data: LaptopInput):
     "CPU_GPU_Combo": cpu_gpu_combo
 
 }])
+   
+    print("\n========== CLASSIFICATION DF ==========")
+    print(classification_df)
+    
+    print("\n========== VALUES ==========")
+    for col in classification_df.columns:
+        value = classification_df.iloc[0][col]
+        print(f"{col}: {value} ({type(value)})")
+    
     predicted_category = classification_model.predict(
-    classification_df
-).flatten()[0]
+        classification_df
+    ).flatten()[0]
     input_df = pd.DataFrame([{
 
     "Brand": data.brand,
 
-    "Processor": match["Processor"],
+    "Processor": processor,
 
-    "Graphic Processor": match["Graphic Processor"],
+    "Graphic Processor": gpu,
 
     "Capacity": data.capacity,
 
     "RAM Type": data.ram_type,
 
-    "RAM Speed": match["RAM Speed"],
+    "RAM Speed": data.ram_speed,
 
     "SSD Capacity": data.ssd_capacity,
 
-    "SSD Type": match["SSD Type"],
+    "SSD Type": ssd_type,
 
     "Graphics Memory": data.graphics_memory,
 
@@ -159,9 +147,9 @@ def predict_price(data: LaptopInput):
 
     "Warranty": data.warranty,
 
-    "Wi-Fi Version": match["Wi-Fi Version"],
+    "Wi-Fi Version": wifi,
 
-    "Bluetooth Version": match["Bluetooth Version"],
+    "Bluetooth Version": bluetooth,
 
     "Category": predicted_category,
 
@@ -170,13 +158,7 @@ def predict_price(data: LaptopInput):
     "GPU Tier": gpu_tier
 
 }])
-    # =====================================================
-    # DEBUG
-    # =====================================================
-
-    print(input_df.T)
-    print("\n========== MATCH FOUND ==========\n")
-    print(match.T)
+   
     # =====================================================
     # PREDICT
     # =====================================================

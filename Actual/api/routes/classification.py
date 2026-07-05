@@ -3,8 +3,16 @@ import pandas as pd
 from fastapi import APIRouter
 
 from api.dependencies import (
-    classification_model,
-    laptop_dataset
+    classification_model
+)
+
+from api.feature_engineering import (
+    get_processor_tier,
+    get_gpu_tier,
+    normalize_gpu,
+    normalize_ssd,
+    normalize_wifi,
+    normalize_bluetooth
 )
 
 from api.schemas import (
@@ -25,58 +33,22 @@ router = APIRouter()
 def classify_laptop(data: LaptopInput):
 
     # =====================================================
-    # FIND MATCH IN DATASET
+    # COMPUTE FEATURES
     # =====================================================
-
-    processor_matches = laptop_dataset[
-        laptop_dataset["Processor"]
-        .str.contains(
-            data.processor,
-            case=False,
-            na=False,
-            regex=False
-        )
-    ]
-
-    gpu_matches = processor_matches[
-        processor_matches["Graphic Processor"]
-        .str.contains(
-            data.graphic_processor,
-            case=False,
-            na=False,
-            regex=False
-        )
-    ]
-
-    if gpu_matches.empty:
-
-        processor_matches = laptop_dataset[
-            laptop_dataset["Processor"]
-            .str.lower()
-            .str.contains(
-                data.processor.lower().replace("intel ", "").replace("amd ", ""),
-                na=False
-            )
-        ]
-
-        gpu_matches = processor_matches[
-            processor_matches["Graphic Processor"]
-            .str.lower()
-            .str.contains(
-                data.graphic_processor.lower().replace("nvidia ", "").replace("geforce ", ""),
-                na=False
-            )
-        ]
-
-    if gpu_matches.empty:
-        raise ValueError(
-            f"Couldn't find {data.processor} + {data.graphic_processor}"
-        )
-
-    match = gpu_matches.iloc[0]
-
-    processor_tier = match["Processor Tier"]
-    gpu_tier = match["GPU Tier"]
+    
+    processor = data.processor
+    
+    gpu = normalize_gpu(data.graphic_processor)
+    
+    ssd_type = normalize_ssd(data.ssd_type)
+    
+    wifi = normalize_wifi(data.wi_fi_version)
+    
+    bluetooth = normalize_bluetooth(data.bluetooth_version)
+    
+    processor_tier = get_processor_tier(processor)
+    
+    gpu_tier = get_gpu_tier(gpu)
     
     cpu_gpu_combo = f"{processor_tier}_{gpu_tier}"
 
@@ -86,60 +58,49 @@ def classify_laptop(data: LaptopInput):
 
     input_df = pd.DataFrame([{
 
-        "Brand": data.brand,
+    "Brand": data.brand,
 
-        "Processor": match["Processor"],
+    "Processor": processor,
 
-        "Graphic Processor": match["Graphic Processor"],
+    "Graphic Processor": gpu,
 
-        "Capacity": data.capacity,
+    "Capacity": data.capacity,
 
-        "RAM Type": data.ram_type,
+    "RAM Type": data.ram_type,
 
-        "RAM Speed": match["RAM Speed"],
+    "RAM Speed": data.ram_speed,
 
-        "SSD Capacity": data.ssd_capacity,
+    "SSD Capacity": data.ssd_capacity,
 
-        "SSD Type": match["SSD Type"],
+    "SSD Type": ssd_type,
 
-        "Graphics Memory": data.graphics_memory,
+    "Graphics Memory": data.graphics_memory,
 
-        "Battery Capacity": data.battery_capacity,
+    "Battery Capacity": data.battery_capacity,
 
-        "Battery Type": data.battery_type,
+    "Battery Type": data.battery_type,
 
-        "Weight": data.weight,
+    "Weight": data.weight,
 
-        "Warranty": data.warranty,
+    "Warranty": data.warranty,
 
-        "Wi-Fi Version": match["Wi-Fi Version"],
+    "Wi-Fi Version": wifi,
 
-        "Bluetooth Version": match["Bluetooth Version"],
+    "Bluetooth Version": bluetooth,
 
-        "Processor Tier": processor_tier,
+    "Processor Tier": processor_tier,
 
-        "GPU Tier": gpu_tier,
-        "CPU_GPU_Combo": cpu_gpu_combo
+    "GPU Tier": gpu_tier,
 
-    }])
+    "CPU_GPU_Combo": cpu_gpu_combo
+
+}])
 
     # =====================================================
     # DEBUG
     # =====================================================
-
-    print("\n========== MATCH ==========\n")
-    print(match.T)
-
-    print("\n========== INPUT ==========\n")
+    print("\n========== CLASSIFICATION INPUT ==========\n")
     print(input_df.T)
-    print("\nColumns sent to model:")
-    print(input_df.columns.tolist())
-    
-    print("\nNumber of columns:")
-    print(len(input_df.columns))
-    
-    print("\nModel expects:")
-    print(classification_model.feature_names_)
 
     # =====================================================
     # PREDICT

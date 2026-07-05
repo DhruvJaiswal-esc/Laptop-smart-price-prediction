@@ -13,12 +13,29 @@ from api.dependencies import (
     recommendation_scaler,
     recommendation_feature_columns,
     recommendation_dataset,
-    laptop_dataset
+    classification_model
+)
+from api.feature_engineering import (
+    get_processor_tier,
+    get_gpu_tier,
+    normalize_gpu
+)
+from api.feature_engineering import (
+    get_processor_tier,
+    get_gpu_tier,
+    normalize_gpu,
+    normalize_ssd,
+    normalize_wifi,
+    normalize_bluetooth
 )
 
 router = APIRouter()
 
+# =====================================================
+# COMPUTE FEATURES
+# =====================================================
 
+    
 @router.post(
     "/",
     response_model=RecommendationResponse
@@ -28,61 +45,63 @@ def recommend_laptops(data: LaptopInput):
     # =====================================================
     # FIND MATCH IN DATASET
     # =====================================================
+    processor = data.processor
+    gpu = normalize_gpu(data.graphic_processor)
+    
+    processor_tier = get_processor_tier(processor)
+    
+    gpu_tier = get_gpu_tier(gpu)
+    
+    cpu_gpu_combo = f"{processor_tier}_{gpu_tier}"
 
-    processor_matches = laptop_dataset[
-        laptop_dataset["Processor"]
-        .str.contains(
-            data.processor,
-            case=False,
-            na=False,
-            regex=False
-        )
-    ]
+   
 
-    gpu_matches = processor_matches[
-        processor_matches["Graphic Processor"]
-        .str.contains(
-            data.graphic_processor,
-            case=False,
-            na=False,
-            regex=False
-        )
-    ]
-
-    if gpu_matches.empty:
-
-        processor_matches = laptop_dataset[
-            laptop_dataset["Processor"]
-            .str.lower()
-            .str.contains(
-                data.processor.lower().replace("intel ", "").replace("amd ", ""),
-                na=False
-            )
-        ]
-
-        gpu_matches = processor_matches[
-            processor_matches["Graphic Processor"]
-            .str.lower()
-            .str.contains(
-                data.graphic_processor.lower().replace("nvidia ", "").replace("geforce ", ""),
-                na=False
-            )
-        ]
-
-    if gpu_matches.empty:
-        raise ValueError(
-            f"Couldn't find {data.processor} + {data.graphic_processor}"
-        )
-
-    match = gpu_matches.iloc[0]
-
-    processor_tier = match["Processor Tier"]
-    gpu_tier = match["GPU Tier"]
+   
 
     # =====================================================
     # CREATE INPUT
-    # =====================================================
+    classification_df = pd.DataFrame([{
 
+    "Brand": data.brand,
+
+    "Processor": processor,
+
+    "Graphic Processor": gpu,
+
+    "Capacity": data.capacity,
+
+    "RAM Type": data.ram_type,
+
+    "RAM Speed": data.ram_speed,
+
+    "SSD Capacity": data.ssd_capacity,
+
+    "SSD Type": normalize_ssd(data.ssd_type),
+
+    "Graphics Memory": data.graphics_memory,
+
+    "Battery Capacity": data.battery_capacity,
+
+    "Battery Type": data.battery_type,
+
+    "Weight": data.weight,
+
+    "Warranty": data.warranty,
+
+    "Wi-Fi Version": normalize_wifi(data.wi_fi_version),
+
+    "Bluetooth Version": normalize_bluetooth(data.bluetooth_version),
+
+    "Processor Tier": processor_tier,
+
+    "GPU Tier": gpu_tier,
+
+    "CPU_GPU_Combo": cpu_gpu_combo
+
+}])
+    predicted_category = classification_model.predict(
+    classification_df
+    ).flatten()[0]
     input_df = pd.DataFrame([{
 
         "Brand": data.brand,
@@ -90,8 +109,8 @@ def recommend_laptops(data: LaptopInput):
         "Processor Tier": processor_tier,
 
         "GPU Tier": gpu_tier,
+        "Category": predicted_category,
 
-        "Category": data.category,
 
         "Capacity": data.capacity,
 
