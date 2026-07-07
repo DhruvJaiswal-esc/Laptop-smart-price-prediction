@@ -1,7 +1,7 @@
 import joblib
 import pandas as pd
 
-from sentence_transformers import SentenceTransformer
+
 
 from api.explainability.shap_utils import SHAPExplainer
 from api.explainability.lime_utils import LIMEExplainer
@@ -55,9 +55,7 @@ recommendation_dataset = joblib.load(
 # NLP MODEL
 # =====================================================
 
-embedding_model = SentenceTransformer(
-    "all-MiniLM-L6-v2"
-)
+
 
 # =====================================================
 # EXPLAINABILITY
