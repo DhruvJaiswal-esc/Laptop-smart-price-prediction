@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+
+  backend:
+
+    build: .
+
+    container_name: laptop_backend
+
+    ports:
+
+      - "8000:8000"
+
+    depends_on:
+
+      - postgres
+
+    environment:
+
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/laptop_db
+
+  postgres:
+
+    image: postgres:16
+
+    container_name: laptop_postgres
+
+    restart: always
+
+    environment:
+
+      POSTGRES_DB: laptop_db
+
+      POSTGRES_USER: postgres
+
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+
+      - "5432:5432"
+
+    volumes:
+
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+
+  postgres_data:
