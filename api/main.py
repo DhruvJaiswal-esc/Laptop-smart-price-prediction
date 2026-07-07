@@ -5,13 +5,27 @@ from api.routes.classification import router as classification_router
 from api.routes.recommendation import router as recommendation_router
 from api.routes.explainability import router as explainability_router
 from api.routes.insights import router as insights_router
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 
 app = FastAPI(
     title="Laptop Market Intelligence API",
     description="API for Laptop Price Prediction, Classification, Recommendation and Explainability",
     version="1.0.0"
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:8501",          # Local Streamlit
+        "https://",  # Replace after deploying frontend
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # =====================================================
 # ROUTES
 # =====================================================
