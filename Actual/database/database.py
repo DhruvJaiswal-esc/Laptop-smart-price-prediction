@@ -2,10 +2,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
-
+import os
 # =====================================================
 # DATABASE CONFIGURATION
 # =====================================================
+
+import os
 
 DATABASE_USERNAME = "postgres"
 
@@ -17,22 +19,13 @@ DATABASE_PORT = "5432"
 
 DATABASE_NAME = "LaptopMarketIntelligence"
 
-DATABASE_URL = (
+DATABASE_URL = os.getenv(
 
-    f"postgresql+psycopg2://"
+    "DATABASE_URL",
 
-    f"{DATABASE_USERNAME}:"
-
-    f"{DATABASE_PASSWORD}@"
-
-    f"{DATABASE_HOST}:"
-
-    f"{DATABASE_PORT}/"
-
-    f"{DATABASE_NAME}"
+    f"postgresql://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
 
 )
-
 # =====================================================
 # SQLALCHEMY ENGINE
 # =====================================================

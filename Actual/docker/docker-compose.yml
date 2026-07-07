@@ -18,7 +18,7 @@ services:
 
     environment:
 
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/laptop_db
+      DATABASE_URL: postgresql://postgres:Firena123@postgres:5432/LaptopMarketIntelligence
 
   postgres:
 
@@ -30,11 +30,11 @@ services:
 
     environment:
 
-      POSTGRES_DB: laptop_db
+      POSTGRES_DB: LaptopMarketIntelligenceq
 
       POSTGRES_USER: postgres
 
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: Firena123
 
     ports:
 
