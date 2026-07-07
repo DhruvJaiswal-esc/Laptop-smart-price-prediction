@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+
 
 from api.routes.prediction import router as prediction_router
 from api.routes.classification import router as classification_router
@@ -18,11 +18,8 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8501",          # Local Streamlit
-        "https://",  # Replace after deploying frontend
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
