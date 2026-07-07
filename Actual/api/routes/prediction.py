@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
+from fastapi import Depends
+from sqlalchemy.orm import Session
 
+from database.database import get_db
+from database.crud import save_prediction
 from fastapi import APIRouter
 
 
@@ -34,7 +38,11 @@ router = APIRouter()
     "/",
     response_model=PricePredictionResponse
 )
-def predict_price(data: LaptopInput):
+def predict_price(
+
+    data: LaptopInput,
+
+    db: Session = Depends(get_db)):
 
     # =====================================================
     # COMPUTE FEATURES
@@ -168,10 +176,24 @@ def predict_price(data: LaptopInput):
     predicted_price = float(
         np.expm1(predicted_log_price)
     )
+    prediction = save_prediction(
+
+    db=db,
+
+    data=data,
+
+    predicted_price=predicted_price,
+
+    predicted_category=predicted_category
+
+)
 
     return PricePredictionResponse(
-        predicted_price=round(
-            predicted_price,
-            2
-        ),predicted_category=predicted_category
-    )
+
+    prediction_id=prediction.id,
+
+    predicted_price=round(predicted_price,2),
+
+    predicted_category=predicted_category
+
+)

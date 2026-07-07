@@ -83,6 +83,7 @@ class LaptopInput(BaseModel):
 
 
 class PricePredictionResponse(BaseModel):
+    prediction_id:int
     predicted_price: float
     predicted_category: str
 

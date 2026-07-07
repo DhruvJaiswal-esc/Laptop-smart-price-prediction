@@ -1,19 +1,20 @@
-import numpy as np
+
 import pandas as pd
-import pprint 
+
 from fastapi import APIRouter
+from fastapi import HTTPException
 
-from api.schemas import (
-    LaptopInput
+from fastapi import Depends
+from sqlalchemy.orm import Session
+
+from database.database import get_db
+
+from database.crud import (
+    save_explainability,
+    get_prediction,
+    delete_explainability
 )
-
 from api.dependencies import (
-
-    price_model,
-
-    classification_model,
-
-    laptop_dataset,
 
     shap_explainer,
 
@@ -51,40 +52,51 @@ router = APIRouter()
 # EXPLAINABILITY
 # =====================================================
 
-@router.post("/")
+@router.post("/{prediction_id}")
 def explain_prediction(
 
-    data: LaptopInput
+    prediction_id: int,
 
-):
+    db: Session = Depends(get_db)
 
+    ):  
+    prediction = get_prediction(
+    db,
+    prediction_id
+)
+
+    if prediction is None:
+        raise HTTPException(
+        status_code=404,
+        detail="Prediction not found"
+    )
     # =====================================================
     # NORMALIZE USER INPUT
     # =====================================================
 
-    processor = data.processor
+    processor = prediction.processor
 
     gpu = normalize_gpu(
 
-        data.graphic_processor
+        prediction.graphic_processor
 
     )
 
     ssd_type = normalize_ssd(
 
-        data.ssd_type
+        prediction.ssd_type
 
     )
 
     wifi = normalize_wifi(
 
-        data.wi_fi_version
+        prediction.wifi_version
 
     )
 
     bluetooth = normalize_bluetooth(
 
-        data.bluetooth_version
+        prediction.bluetooth_version
 
     )
 
@@ -100,137 +112,64 @@ def explain_prediction(
 
     )
 
-    cpu_gpu_combo = (
-
-        f"{processor_tier}_{gpu_tier}"
-
-    )
+   
 
     # =====================================================
     # CLASSIFICATION INPUT
     # =====================================================
 
-    classification_df = pd.DataFrame([{
+    
 
-        "Brand": data.brand,
-
-        "Processor": processor,
-
-        "Graphic Processor": gpu,
-
-        "Capacity": data.capacity,
-
-        "RAM Type": data.ram_type,
-
-        "RAM Speed": data.ram_speed,
-
-        "SSD Capacity": data.ssd_capacity,
-
-        "SSD Type": ssd_type,
-
-        "Graphics Memory": data.graphics_memory,
-
-        "Battery Capacity": data.battery_capacity,
-
-        "Battery Type": data.battery_type,
-
-        "Weight": data.weight,
-
-        "Warranty": data.warranty,
-
-        "Wi-Fi Version": wifi,
-
-        "Bluetooth Version": bluetooth,
-
-        "Processor Tier": processor_tier,
-
-        "GPU Tier": gpu_tier,
-
-        "CPU_GPU_Combo": cpu_gpu_combo
-
-    }])
-
+    predicted_category = prediction.predicted_category
     # =====================================================
-    # CATEGORY
-    # =====================================================
-
-    predicted_category = (
-
-        classification_model
-
-        .predict(
-
-            classification_df
-
-        )
-
-        .flatten()[0]
-
-    )
-        # =====================================================
     # PRICE PREDICTION INPUT
     # =====================================================
 
     prediction_df = pd.DataFrame([{
 
-        "Brand": data.brand,
+    "Brand": prediction.brand,
 
-        "Processor": processor,
+    "Processor": processor,
 
-        "Graphic Processor": gpu,
+    "Graphic Processor": gpu,
 
-        "Capacity": data.capacity,
+    "Capacity": prediction.capacity,
 
-        "RAM Type": data.ram_type,
+    "RAM Type": prediction.ram_type,
 
-        "RAM Speed": data.ram_speed,
+    "RAM Speed": prediction.ram_speed,
 
-        "SSD Capacity": data.ssd_capacity,
+    "SSD Capacity": prediction.ssd_capacity,
 
-        "SSD Type": ssd_type,
+    "SSD Type": ssd_type,
 
-        "Graphics Memory": data.graphics_memory,
+    "Graphics Memory": prediction.graphics_memory,
 
-        "Battery Capacity": data.battery_capacity,
+    "Battery Capacity": prediction.battery_capacity,
 
-        "Battery Type": data.battery_type,
+    "Battery Type": prediction.battery_type,
 
-        "Weight": data.weight,
+    "Weight": prediction.weight,
 
-        "Warranty": data.warranty,
+    "Warranty": prediction.warranty,
 
-        "Wi-Fi Version": wifi,
+    "Wi-Fi Version": wifi,
 
-        "Bluetooth Version": bluetooth,
+    "Bluetooth Version": bluetooth,
 
-        "Category": predicted_category,
+    "Category": predicted_category,
 
-        "Processor Tier": processor_tier,
+    "Processor Tier": processor_tier,
 
-        "GPU Tier": gpu_tier
+    "GPU Tier": gpu_tier
 
-    }])
-
+}])
     # =====================================================
     # PRICE PREDICTION
     # =====================================================
 
-    predicted_log_price = price_model.predict(
-
-        prediction_df
-
-    )[0]
-
-    predicted_price = float(
-
-        np.expm1(
-
-            predicted_log_price
-
-        )
-
-    )
-
+    predicted_price = prediction.predicted_price
+    
     # =====================================================
     # SHAP EXPLANATION
     # =====================================================
@@ -248,9 +187,7 @@ def explain_prediction(
     # =====================================================
     # LIME EXPLANATION
     # =====================================================
-    print("\n===== LIME PREDICTION =====")
-    print(prediction_df.columns.tolist())
-    print(len(prediction_df.columns))
+ 
     lime_result = lime_explainer.explain_prediction(
 
         prediction_df,
@@ -273,11 +210,25 @@ def explain_prediction(
     lime_result=lime_result
 
     )
+    delete_explainability(
+    db,
+    prediction_id
+    )
+    
+    save_explainability(
+        db=db,
+        prediction_id=prediction_id,
+        shap_result=shap_result,
+        lime_result=lime_result,
+        report_path=report_path
+    )
         # =====================================================
     # RESPONSE
     # =====================================================
 
     response = {
+
+    "prediction_id": prediction_id,
 
     "prediction": {
 
@@ -290,43 +241,7 @@ def explain_prediction(
 
     },
 
-    "input": {
-
-        "Brand": data.brand,
-
-        "Processor": processor,
-
-        "Graphic Processor": gpu,
-
-        "Capacity": data.capacity,
-
-        "RAM Type": data.ram_type,
-
-        "RAM Speed": data.ram_speed,
-
-        "SSD Capacity": data.ssd_capacity,
-
-        "SSD Type": ssd_type,
-
-        "Graphics Memory": data.graphics_memory,
-
-        "Battery Capacity": data.battery_capacity,
-
-        "Battery Type": data.battery_type,
-
-        "Weight": data.weight,
-
-        "Warranty": data.warranty,
-
-        "Wi-Fi Version": wifi,
-
-        "Bluetooth Version": bluetooth,
-
-        "Processor Tier": processor_tier,
-
-        "GPU Tier": gpu_tier
-
-    },
+    "input": prediction_df.iloc[0].to_dict(),
 
     "shap": shap_result,
 

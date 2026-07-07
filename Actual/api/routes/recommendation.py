@@ -1,9 +1,16 @@
 import pandas as pd
-
+from database.crud import get_prediction
 from fastapi import APIRouter
-
+from fastapi import Depends
+from fastapi import HTTPException
+from sqlalchemy.orm import Session
+from database.crud import delete_recommendations
+from database.database import get_db
+from database.crud import (
+    
+    save_recommendations
+)
 from api.schemas import (
-    LaptopInput,
     Recommendation,
     RecommendationResponse
 )
@@ -13,21 +20,14 @@ from api.dependencies import (
     recommendation_scaler,
     recommendation_feature_columns,
     recommendation_dataset,
-    classification_model
+   
 )
 from api.feature_engineering import (
     get_processor_tier,
     get_gpu_tier,
     normalize_gpu
 )
-from api.feature_engineering import (
-    get_processor_tier,
-    get_gpu_tier,
-    normalize_gpu,
-    normalize_ssd,
-    normalize_wifi,
-    normalize_bluetooth
-)
+
 
 router = APIRouter()
 
@@ -36,94 +36,85 @@ router = APIRouter()
 # =====================================================
 
     
-@router.post(
-    "/",
-    response_model=RecommendationResponse
-)
-def recommend_laptops(data: LaptopInput):
+@router.post("/{prediction_id}")
+def recommend_laptops(
 
+    prediction_id: int,
+
+    db: Session = Depends(get_db)
+
+):
+    prediction = get_prediction(
+
+    db,
+
+    prediction_id
+
+)
+
+    if prediction is None:
+    
+        raise HTTPException(
+    
+            status_code=404,
+    
+            detail="Prediction not found"
+
+    )
     # =====================================================
     # FIND MATCH IN DATASET
     # =====================================================
-    processor = data.processor
-    gpu = normalize_gpu(data.graphic_processor)
+    processor = prediction.processor
     
-    processor_tier = get_processor_tier(processor)
+    gpu = normalize_gpu(
     
-    gpu_tier = get_gpu_tier(gpu)
+        prediction.graphic_processor
     
-    cpu_gpu_combo = f"{processor_tier}_{gpu_tier}"
-
+    )
+    
+    processor_tier = get_processor_tier(
+    
+        processor
+    
+    )
+    
+    gpu_tier = get_gpu_tier(
+    
+        gpu
+    
+    )
+    
+    
+    
    
 
    
 
     # =====================================================
     # CREATE INPUT
-    classification_df = pd.DataFrame([{
+   
+    input_df = pd.DataFrame([{
 
-    "Brand": data.brand,
-
-    "Processor": processor,
-
-    "Graphic Processor": gpu,
-
-    "Capacity": data.capacity,
-
-    "RAM Type": data.ram_type,
-
-    "RAM Speed": data.ram_speed,
-
-    "SSD Capacity": data.ssd_capacity,
-
-    "SSD Type": normalize_ssd(data.ssd_type),
-
-    "Graphics Memory": data.graphics_memory,
-
-    "Battery Capacity": data.battery_capacity,
-
-    "Battery Type": data.battery_type,
-
-    "Weight": data.weight,
-
-    "Warranty": data.warranty,
-
-    "Wi-Fi Version": normalize_wifi(data.wi_fi_version),
-
-    "Bluetooth Version": normalize_bluetooth(data.bluetooth_version),
+    "Brand": prediction.brand,
 
     "Processor Tier": processor_tier,
 
     "GPU Tier": gpu_tier,
 
-    "CPU_GPU_Combo": cpu_gpu_combo
+    "Category": prediction.predicted_category,
+
+    "Capacity": prediction.capacity,
+
+    "SSD Capacity": prediction.ssd_capacity,
+
+    "Graphics Memory": prediction.graphics_memory,
+
+    "Weight": prediction.weight,
+
+    "Battery Capacity": prediction.battery_capacity
 
 }])
-    predicted_category = classification_model.predict(
-    classification_df
-    ).flatten()[0]
-    input_df = pd.DataFrame([{
-
-        "Brand": data.brand,
-
-        "Processor Tier": processor_tier,
-
-        "GPU Tier": gpu_tier,
-        "Category": predicted_category,
-
-
-        "Capacity": data.capacity,
-
-        "SSD Capacity": data.ssd_capacity,
-
-        "Graphics Memory": data.graphics_memory,
-
-        "Weight": data.weight,
-
-        "Battery Capacity": data.battery_capacity
-
-    }])
-
+   
     input_df = pd.get_dummies(
         input_df,
         dtype=int
@@ -163,7 +154,26 @@ def recommend_laptops(data: LaptopInput):
             )
 
         )
+   
+    
+    delete_recommendations(
 
+    db,
+
+    prediction_id
+
+    )
+    
+    save_recommendations(
+    
+        db=db,
+    
+        prediction_id=prediction_id,
+    
+        recommendations=recommendations
+    
+    )
+   
     return RecommendationResponse(
         recommendations=recommendations
     )
