@@ -1,0 +1,13 @@
+[theme]
+base = "dark"
+primaryColor = "#C97C3D"
+backgroundColor = "#0A0C0E"
+secondaryBackgroundColor = "#111417"
+textColor = "#EDEAE4"
+font = "Archivo"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false

@@ -1,0 +1,831 @@
+/* =====================================================
+   FONTS
+   Four distinct faces, one per role, so the eye never confuses
+   what it's reading with why it's reading it:
+     - Display (hero, big numerals in the quote strip): Space
+       Grotesk - geometric, technical, a little unconventional -
+       the closest thing this instrument panel has to a "brand".
+     - Headings (h1-h4, section titles, card titles): Fraunces -
+       a soft optical-size serif that warms up the graphite panel
+       instead of stacking another grotesque on top of the display
+       face. Gives every heading actual editorial weight.
+     - Body / prose (paragraphs, captions, labels, buttons): Archivo -
+       a grotesque distinct in width and rhythm from Space Grotesk,
+       so body copy never gets mistaken for a heading at a glance.
+     - Mono (numerals, tags, footer, eyebrows, code): Space Mono -
+       ticker-style monospace, pairs with Space Grotesk by design,
+       reads as "instrument readout" everywhere it appears.
+===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg: #0A0C0E;
+    --surface: #111417;
+    --surface-raised: #161A1E;
+    --card: #15181C;
+    --border: #2A2E33;
+    --rule: #1D2024;
+
+    --copper: #C97C3D;
+    --copper-bright: #E0954F;
+    --copper-dim: #8A5A2E;
+    --copper-glow: rgba(201, 124, 61, 0.12);
+    --copper-glow-strong: rgba(201, 124, 61, 0.22);
+
+    --cyan: #4FA6B0;
+    --cyan-dim: #356870;
+    --cyan-glow: rgba(79, 166, 176, 0.12);
+
+    --text: #EDEAE4;
+    --text-muted: #8A8F98;
+    --text-faint: #5A5F66;
+
+    --success: #5FA88A;
+    --success-glow: rgba(95, 168, 138, 0.12);
+    --warning: #C9A227;
+    --error: #B85450;
+    --error-glow: rgba(184, 84, 80, 0.12);
+
+    --display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --heading: 'Fraunces', 'Georgia', serif;
+    --sans: 'Archivo', 'Segoe UI', sans-serif;
+    --mono: 'Space Mono', 'Courier New', monospace;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+}
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+html, body, [class*="css"] {
+    font-family: var(--sans);
+}
+
+.stApp {
+    background: linear-gradient(
+        145deg, 
+        rgba(224, 149, 79, 0.18) 0%,   /* Bright copper/gold */
+        rgba(201, 124, 61, 0.08) 35%,  /* Mid-tone copper */
+        var(--bg) 100%                 /* Fades seamlessly into your dark background */
+    );
+    background-attachment: fixed;
+    color: var(--text);
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--heading);
+    color: var(--text);
+    letter-spacing: -0.01em;
+}
+
+h1 { font-size: 30px; font-weight: 600; }
+h2 { font-size: 22px; font-weight: 600; }
+h3 { font-size: 17px; font-weight: 600; }
+h4 { font-size: 14px; font-weight: 600; }
+
+p, li, span, label, div {
+    font-family: var(--sans);
+    color: var(--text);
+}
+
+a { color: var(--copper); }
+a:hover { color: var(--copper-bright); }
+
+code, .stCode, .stCodeBlock {
+    font-family: var(--mono) !important;
+}
+
+::selection {
+    background: var(--copper-glow-strong);
+    color: var(--text);
+}
+
+/* Eyebrow / label convention used throughout: small-caps, wide
+   tracking, muted color. This is the structural device that
+   replaces gradient card headers - it reads as an instrument
+   panel label, not a title. */
+.lmi-eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 6px 0;
+}
+
+/* =====================================================
+   CAPTIONS / FOOTER
+   st.caption is this app's real footer (the native Streamlit
+   footer is hidden below) - rendered in the mono face so it
+   reads as a status line, not an afterthought in body prose.
+===================================================== */
+
+[data-testid="stCaptionContainer"], .stCaption, small {
+    font-family: var(--mono) !important;
+    font-size: 12px !important;
+    letter-spacing: 0.02em;
+    color: var(--text-muted) !important;
+}
+
+
+
+section[data-testid="stSidebar"] {
+    background: var(--surface);
+    border-right: 1px solid var(--rule);
+}
+
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+section[data-testid="stSidebar"] hr {
+    margin: 1.1rem 0;
+}
+
+/* Native page-nav list restyled to read as terminal menu items
+   rather than default Streamlit radio pills. */
+div[data-testid="stSidebarNav"] {
+    padding-top: 0.25rem;
+}
+
+div[data-testid="stSidebarNav"] a {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+}
+
+div[data-testid="stSidebarNav"] a:hover {
+    background: var(--copper-glow);
+    color: var(--text);
+}
+
+div[data-testid="stSidebarNav"] a[aria-current="page"] {
+    background: var(--copper-glow-strong);
+    color: var(--copper-bright);
+    font-weight: 600;
+}
+
+/* =====================================================
+   BUTTONS
+   Flat, not gradient. Copper fill only for primary actions;
+   everything else is an outlined rule-button.
+===================================================== */
+
+.stButton > button, .stFormSubmitButton > button, [data-testid="stDownloadButton"] button {
+    width: 100%;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14px;
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    box-shadow: none;
+}
+
+.stButton > button:hover, .stFormSubmitButton > button:hover, [data-testid="stDownloadButton"] button:hover {
+    border-color: var(--copper);
+    background: var(--copper-glow);
+    color: var(--text);
+    transform: none;
+}
+
+.stButton > button:active, .stFormSubmitButton > button:active {
+    background: var(--copper-glow-strong);
+}
+
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
+    background: var(--copper);
+    border: 1px solid var(--copper);
+    color: #0A0C0E;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
+    background: var(--copper-bright);
+    border-color: var(--copper-bright);
+}
+
+/* =====================================================
+   METRICS
+   Native st.metric restyled: no card chrome, just a ruled cell
+   with a mono numeral - like a terminal quote strip.
+===================================================== */
+
+div[data-testid="stMetric"] {
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--rule);
+    border-radius: 0;
+    padding: 12px 0 0 0;
+    box-shadow: none;
+}
+
+div[data-testid="stMetricLabel"] {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted) !important;
+}
+
+div[data-testid="stMetricValue"] {
+    font-family: var(--mono) !important;
+    font-weight: 600;
+    color: var(--copper) !important;
+    font-size: 26px !important;
+}
+
+div[data-testid="stMetricDelta"] svg { display: none; }
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.stTextInput input, .stNumberInput input,
+.stSelectbox div[data-baseweb="select"] > div {
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+    color: var(--text);
+}
+
+.stTextInput input:focus, .stNumberInput input:focus {
+    border-color: var(--copper);
+    box-shadow: 0 0 0 1px var(--copper);
+}
+
+.stTextInput label, .stNumberInput label, .stSelectbox label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.stTextInput input::placeholder { color: var(--text-faint); opacity: 1; }
+
+/* Keyboard focus visibility across native controls */
+button:focus-visible, [tabindex]:focus-visible, input:focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 2px;
+}
+
+/* =====================================================
+   FORM
+===================================================== */
+
+div[data-testid="stForm"] {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1px solid var(--border);
+}
+
+/* =====================================================
+   TABS
+   Underline convention, no pill background - a ruled tab strip.
+===================================================== */
+
+div[data-baseweb="tab-list"] {
+    border-bottom: 1px solid var(--rule);
+    gap: 4px;
+}
+
+button[data-baseweb="tab"] {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: transparent;
+}
+
+button[data-baseweb="tab"]:hover {
+    color: var(--text);
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: var(--copper);
+    border-bottom: 2px solid var(--copper);
+}
+
+/* =====================================================
+   EXPANDERS
+===================================================== */
+
+details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+details:hover {
+    border-color: var(--copper-dim);
+}
+
+summary {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+}
+
+/* =====================================================
+   DATAFRAME / TABLE / JSON
+===================================================== */
+
+div[data-testid="stDataFrame"], div[data-testid="stJson"] {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+/* =====================================================
+   ALERTS
+   Left rule-bar instead of a filled colored box - quieter,
+   reads as an annotation rather than a banner ad.
+===================================================== */
+
+div[data-baseweb="notification"] {
+    border-radius: var(--radius-sm);
+    background: var(--surface) !important;
+    border-left: 3px solid var(--border);
+}
+
+div[data-testid="stNotificationContentSuccess"] { color: var(--success); }
+div[data-testid="stNotificationContentInfo"] { color: var(--cyan); }
+div[data-testid="stNotificationContentWarning"] { color: var(--warning); }
+div[data-testid="stNotificationContentError"] { color: var(--error); }
+
+/* =====================================================
+   PLOTLY
+===================================================== */
+
+.js-plotly-plot {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--copper-dim); }
+
+/* =====================================================
+   SIGNATURE: QUOTE STRIP
+   The prediction result renders like a ticker/instrument
+   readout: mono numerals, ruled cells, a directional glyph -
+   not a gradient hero card.
+===================================================== */
+
+.lmi-quote {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, var(--copper-glow), transparent 40%),
+        var(--surface);
+    position: relative;
+}
+
+.lmi-quote::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--copper);
+}
+
+.lmi-quote-cell {
+    flex: 1;
+    padding: 22px 26px;
+    border-right: 1px solid var(--rule);
+}
+
+.lmi-quote-cell:last-child { border-right: none; }
+
+.lmi-quote-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.lmi-quote-value {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--copper);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+
+.lmi-quote-value.secondary {
+    color: var(--text);
+    font-size: 20px;
+}
+
+.lmi-quote-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-top: 8px;
+}
+
+/* =====================================================
+   RECOMMENDATION / SPEC CARDS
+   Flat ruled card, mono spec table, no gradient, no pill
+   badge - a thin outlined tag instead.
+===================================================== */
+
+.lmi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.lmi-card:hover {
+    border-color: var(--copper-dim);
+}
+
+.lmi-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--heading);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.lmi-card-rank {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    font-weight: 500;
+}
+
+.lmi-card-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+}
+
+.lmi-card-row:first-of-type { border-top: none; }
+
+.lmi-card-row-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.lmi-card-row-value {
+    font-family: var(--mono);
+    color: var(--text);
+    text-align: right;
+}
+
+.lmi-tag {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 10px;
+    border: 1px solid var(--copper-dim);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--copper);
+}
+
+.lmi-tag.cyan {
+    border-color: var(--cyan-dim);
+    color: var(--cyan);
+}
+
+/* =====================================================
+   SECTION HEADER
+===================================================== */
+
+.lmi-section {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+}
+
+.lmi-section-title {
+    font-family: var(--heading);
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+}
+
+.lmi-section-subtitle {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.lmi-hero {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 44px 40px;
+    margin-bottom: 8px;
+    background:
+        linear-gradient(160deg, rgba(201,124,61,0.07), transparent 55%),
+        linear-gradient(340deg, rgba(79,166,176,0.05), transparent 50%),
+        var(--surface);
+    position: relative;
+    overflow: hidden;
+}
+
+.lmi-hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--copper);
+}
+
+.lmi-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 14px;
+}
+
+.lmi-hero-eyebrow .lmi-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 3px var(--success-glow);
+}
+
+.lmi-hero-title {
+    font-family: var(--display);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.02em;
+}
+
+.lmi-hero-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.65;
+}
+
+/* =====================================================
+   STAT STRIP  (ticker row of small metrics under the hero)
+===================================================== */
+
+.lmi-stat-strip {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+    margin: 28px 0 8px 0;
+}
+
+.lmi-stat {
+    flex: 1;
+    padding: 18px 22px;
+    border-right: 1px solid var(--rule);
+}
+
+.lmi-stat:last-child { border-right: none; }
+
+.lmi-stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.lmi-stat-value {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.lmi-stat-value.on {
+    color: var(--success);
+}
+
+.lmi-stat-value.off {
+    color: var(--error);
+}
+
+/* =====================================================
+   STEP LIST (workflow) - numbered because order is real:
+   a stored prediction ID gates the next two pages.
+===================================================== */
+
+.lmi-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.lmi-step {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+}
+
+.lmi-step:first-child { border-top: none; padding-top: 4px; }
+.lmi-step:last-child { padding-bottom: 4px; }
+
+.lmi-step-index {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--copper);
+    min-width: 22px;
+    padding-top: 2px;
+}
+
+.lmi-step-body-title {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 15.5px;
+    color: var(--text);
+    margin-bottom: 3px;
+}
+
+.lmi-step-body-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.lmi-empty {
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--surface);
+}
+
+.lmi-empty-icon {
+    font-size: 26px;
+    margin-bottom: 14px;
+    color: var(--text-faint);
+    font-family: var(--mono);
+}
+
+.lmi-empty-title {
+    font-family: var(--heading);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.lmi-empty-desc {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* =====================================================
+   PILL NAV (breadcrumb style workflow indicator)
+===================================================== */
+
+.lmi-crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+}
+
+.lmi-crumb .sep { color: var(--border); }
+.lmi-crumb .active { color: var(--copper); }
+
+/* =====================================================
+   MISC (Streamlit UI Overrides)
+===================================================== */
+
+/* 1. Hide the default footer */
+footer { display: none !important; }
+
+/* 2. Hide the "Deploy" button and right-side menu strictly by their direct tags */
+[data-testid="stAppDeployButton"],
+[data-testid="stHeaderActionElements"] { 
+    display: none !important; 
+}
+
+/* 3. Make the header completely transparent so your gradient shows through, 
+      but DO NOT apply visibility:hidden to it, or the arrow dies. */
+[data-testid="stHeader"] { 
+    background: transparent !important; 
+}
+
+/* 4. Ensure the arrow matches your copper theme */
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapseButton"] svg {
+    color: var(--copper) !important;
+    fill: var(--copper) !important;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+    .lmi-hero { padding: 30px 24px; }
+    .lmi-hero-title { font-size: 28px; }
+    .lmi-quote { flex-direction: column; }
+    .lmi-quote-cell { border-right: none; border-bottom: 1px solid var(--rule); }
+    .lmi-quote-cell:last-child { border-bottom: none; }
+    .lmi-stat-strip { flex-direction: column; }
+    .lmi-stat { border-right: none; border-bottom: 1px solid var(--rule); }
+    .lmi-stat:last-child { border-bottom: none; }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+}
