@@ -86,11 +86,11 @@ def get_db():
 
 def create_database():
 
-    Base.metadata.create_all(
+    print("Creating database tables...")
 
-        bind=engine
+    Base.metadata.create_all(bind=engine)
 
-    )
+    print("Database tables ready.")
 
 # =====================================================
 # CONNECTION TEST

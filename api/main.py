@@ -7,7 +7,8 @@ from api.routes.explainability import router as explainability_router
 from api.routes.insights import router as insights_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from database.database import create_database
+import database.models
 
 
 
@@ -26,7 +27,10 @@ app.add_middleware(
 # =====================================================
 # ROUTES
 # =====================================================
+@app.on_event("startup")
+def startup():
 
+    create_database()
 app.include_router(
     prediction_router,
     prefix="/prediction",
