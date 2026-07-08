@@ -62,13 +62,13 @@ def laptop_input_form():
         col1, col2, col3, col4, col5 = st.columns(5)
 
         with col1:
-            capacity = st.number_input("RAM (GB)", min_value=4, max_value=128, value=16, step=4)
+            capacity = st.number_input("RAM (GB)", min_value=1, max_value=128, value=16, step=4)
 
         with col2:
             ram_type = st.selectbox("RAM Type", RAM_TYPES)
 
         with col3:
-            ram_speed = st.number_input("RAM Speed (MT/s)", min_value=1600, max_value=9000, value=4800, step=400)
+            ram_speed = st.number_input("RAM Speed (MT/s)", min_value=1600, max_value=9000, value=3200, step=400)
 
         with col4:
             ssd_capacity = st.number_input("SSD (GB)", min_value=128, max_value=4096, value=512, step=128)
@@ -110,7 +110,7 @@ def laptop_input_form():
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            battery_capacity = st.number_input("Battery (Wh)", min_value=20, max_value=120, value=57)
+            battery_capacity = st.number_input("Battery (Wh)", min_value=20, max_value=120, value=0)
 
         with col2:
             battery_type = st.selectbox("Battery Type", BATTERY_TYPES)

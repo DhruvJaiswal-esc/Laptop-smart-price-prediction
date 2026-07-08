@@ -138,7 +138,7 @@ SESSION_DEFAULTS = {
 
 RAM_TYPES = ["DDR4", "DDR5", "LPDDR4X", "LPDDR5", "LPDDR5X"]
 
-SSD_TYPES = ["NVMe", "PCIe Gen 3", "PCIe Gen 4", "PCIe Gen 5", "SATA"]
+SSD_TYPES = ["M.2 NVMe", "SATA"]
 
 BATTERY_TYPES = ["Li-Ion", "Li-Polymer"]
 
@@ -146,7 +146,7 @@ WARRANTY_OPTIONS = [1, 2, 3]
 
 WIFI_OPTIONS = ["Wi-Fi 5", "Wi-Fi 6", "Wi-Fi 6E", "Wi-Fi 7"]
 
-BLUETOOTH_OPTIONS = ["5.0", "5.1", "5.2", "5.3", "5.4"]
+BLUETOOTH_OPTIONS = ["5.0", "5.1", "5.2", "5.3", "5.4","6.0"]
 
 
 # =====================================================
