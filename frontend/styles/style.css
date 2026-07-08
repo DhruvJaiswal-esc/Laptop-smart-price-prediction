@@ -224,87 +224,154 @@ div[data-testid="stSidebarNav"] a[aria-current="page"] {
 .stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
     background: var(--copper-bright);
     border-color: var(--copper-bright);
-}
-
-/* =====================================================
-   METRICS
-   Native st.metric restyled: no card chrome, just a ruled cell
-   with a mono numeral - like a terminal quote strip.
+}/* =====================================================
+   BUTTONS
 ===================================================== */
 
-div[data-testid="stMetric"] {
-    background: transparent;
-    border: none;
-    border-top: 1px solid var(--rule);
-    border-radius: 0;
-    padding: 12px 0 0 0;
-    box-shadow: none;
-}
-
-div[data-testid="stMetricLabel"] {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted) !important;
-}
-
-div[data-testid="stMetricValue"] {
-    font-family: var(--mono) !important;
-    font-weight: 600;
-    color: var(--copper) !important;
-    font-size: 26px !important;
-}
-
-div[data-testid="stMetricDelta"] svg { display: none; }
-
-/* =====================================================
-   INPUTS
-===================================================== */
-
-.stTextInput input, .stNumberInput input,
-.stSelectbox div[data-baseweb="select"] > div {
+.stButton > button, .stFormSubmitButton > button, [data-testid="stDownloadButton"] button {
+    width: 100%;
+    height: 44px;
     border-radius: var(--radius-sm);
-    background: var(--bg);
     border: 1px solid var(--border);
-    font-family: var(--mono);
+    background: transparent;
     color: var(--text);
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.stTextInput input:focus, .stNumberInput input:focus {
-    border-color: var(--copper);
-    box-shadow: 0 0 0 1px var(--copper);
+.stButton > button:hover, .stFormSubmitButton > button:hover, [data-testid="stDownloadButton"] button:hover {
+    border-color: var(--copper-dim);
+    background: var(--surface-raised);
+    color: var(--text);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.stTextInput label, .stNumberInput label, .stSelectbox label {
-    font-family: var(--mono);
-    font-size: 11px;
+.stButton > button:active, .stFormSubmitButton > button:active {
+    transform: translateY(0);
+    background: var(--surface);
+}
+
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
+    background: var(--copper);
+    border: 1px solid var(--copper);
+    color: #0A0C0E !important;
     font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
+    background: var(--copper-bright);
+    border-color: var(--copper-bright);
+    box-shadow: 0 4px 16px var(--copper-glow-strong);
+}
+/* =====================================================
+   GLOBAL PAGE ANIMATION
+===================================================== */
+
+/* Makes the app smoothly fade and glide up when loading */
+.stApp {
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(12px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* =====================================================
+   NATIVE METRICS (Explainability Numbers)
+===================================================== */
+
+/* Turn standard Streamlit metrics into premium floating cards */
+[data-testid="stMetric"] {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-testid="stMetric"]:hover {
+    border-color: var(--copper-dim);
+    background: var(--surface-raised);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px var(--copper-glow);
+}
+
+/* Metric Label */
+[data-testid="stMetricLabel"] {
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
+    margin-bottom: 8px;
 }
 
-.stTextInput input::placeholder { color: var(--text-faint); opacity: 1; }
+/* Metric Value */
+[data-testid="stMetricValue"] {
+    font-family: var(--mono) !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    color: var(--text) !important; 
+    line-height: 1.2 !important;
+}
 
-/* Keyboard focus visibility across native controls */
-button:focus-visible, [tabindex]:focus-visible, input:focus-visible {
-    outline: 2px solid var(--copper);
-    outline-offset: 2px;
+/* Positive/Negative changes under the metric */
+[data-testid="stMetricDelta"] > div {
+    font-family: var(--mono) !important;
+    font-size: 12px !important;
 }
 
 /* =====================================================
-   FORM
+   DIVIDERS & EXPANDERS
 ===================================================== */
 
-div[data-testid="stForm"] {
-    background: var(--surface);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    border: 1px solid var(--border);
+/* Smooth out the st.divider() lines */
+hr {
+    border-color: var(--rule) !important;
+    margin: 2.5em 0 !important;
 }
 
+/* Polish the st.expander ("Raw Developer Data") */
+[data-testid="stExpander"] {
+    background: var(--surface);
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-md) !important;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+}
+
+[data-testid="stExpander"]:hover {
+    border-color: var(--copper-dim) !important;
+}
+
+[data-testid="stExpander"] summary {
+    font-family: var(--heading);
+    color: var(--text);
+    padding: 12px 16px !important;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+[data-testid="stExpander"] summary:hover {
+    background: var(--surface-raised);
+    color: var(--copper);
+}
+
+[data-testid="stExpander"] svg {
+    fill: var(--copper) !important;
+}
 /* =====================================================
    TABS
    Underline convention, no pill background - a ruled tab strip.
@@ -471,9 +538,19 @@ div[data-testid="stNotificationContentError"] { color: var(--error); }
 }
 
 /* =====================================================
+   FORM
+===================================================== */
+
+div[data-testid="stForm"] {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Deep ambient shadow */
+}
+
+/* =====================================================
    RECOMMENDATION / SPEC CARDS
-   Flat ruled card, mono spec table, no gradient, no pill
-   badge - a thin outlined tag instead.
 ===================================================== */
 
 .lmi-card {
@@ -482,11 +559,15 @@ div[data-testid="stNotificationContentError"] { color: var(--error); }
     border-radius: var(--radius-md);
     padding: 20px 22px;
     margin-bottom: 14px;
-    transition: border-color 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .lmi-card:hover {
     border-color: var(--copper-dim);
+    background: var(--surface-raised);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px var(--copper-glow);
 }
 
 .lmi-card-title {
@@ -543,40 +624,43 @@ div[data-testid="stNotificationContentError"] { color: var(--error); }
     text-transform: uppercase;
     color: var(--copper);
 }
-
-.lmi-tag.cyan {
-    border-color: var(--cyan-dim);
-    color: var(--cyan);
-}
-
 /* =====================================================
-   SECTION HEADER
+   SECTION HEADERS
 ===================================================== */
 
 .lmi-section {
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 20px;
-    padding-bottom: 14px;
+    align-items: flex-end;
+    margin: 32px 0 20px 0;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--rule);
+    position: relative;
+}
+
+/* Add a glowing copper accent line to the bottom left of headers */
+.lmi-section::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--copper);
+    box-shadow: 0 0 8px var(--copper-glow-strong);
 }
 
 .lmi-section-title {
     font-family: var(--heading);
-    font-size: 21px;
+    font-size: 22px;
     font-weight: 600;
     color: var(--text);
-    margin: 0;
+    margin-bottom: 4px;
 }
 
 .lmi-section-subtitle {
-    font-family: var(--mono);
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-muted);
-    margin-top: 5px;
 }
-
 /* =====================================================
    HERO
 ===================================================== */
