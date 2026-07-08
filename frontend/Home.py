@@ -13,11 +13,6 @@ from components.sidebar import (
     render_sidebar
 )
 
-from components.cards import (
-    section_header,
-    
-)
-
 
 # =====================================================
 # PAGE CONFIG

@@ -139,19 +139,10 @@ GRID_COLOR = "#F3F4F6"
 # =====================================================
 
 FONT_MONO = "'Space Mono', 'Courier New', monospace"
-FONT_SANS = "'Archivo', 'Segoe UI', sans-serif"
-FONT_HEADING = "'Fraunces', 'Georgia', serif"
+FONT_SANS = "'Share Tech Mono', 'Courier New', monospace"
+FONT_HEADING = "'Unica One', 'Segoe UI', sans-serif"
 FONT_DISPLAY = "'Space Grotesk', 'Segoe UI', sans-serif"
 
-
-# =====================================================
-# CHART COLORS
-# =====================================================
-
-POSITIVE_COLOR = "#5FA88A"
-NEGATIVE_COLOR = "#B85450"
-NEUTRAL_COLOR = "#C97C3D"
-GRID_COLOR = "#1D2024"
 
 
 # =====================================================

@@ -266,12 +266,67 @@ def about():
 # COMPLETE SIDEBAR
 # =====================================================
 
-def render_sidebar():
+# =====================================================
+# COMPLETE SIDEBAR
+# =====================================================
 
+# =====================================================
+# COMPLETE SIDEBAR
+# =====================================================
+
+def render_sidebar():
     initialize_session()
     load_css()
     render_header()
-    progress_tracker()
+    
+    st.sidebar.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+    
+    # 1. BULLETPROOF MULTIPAGE MEMORY:
+    # We use a custom session_state variable instead of relying on the widget's internal key
+    if "theme_state" not in st.session_state:
+        st.session_state.theme_state = False
+
+    # 2. THE TOGGLE WIDGET:
+    is_dark = st.sidebar.toggle("🌗 Dark Mode", value=st.session_state.theme_state)
+    st.session_state.theme_state = is_dark
+    
+    if st.session_state.theme_state:
+        dark_theme = """
+        <style>
+        :root {
+            /* Dark Mode: Vibrant Red/Crimson Gradient */
+            --bg-gradient: linear-gradient(-45deg, #1A0000 0%, #3D0005 18%, #7A0A0A 38%, #A50000 52%, #7A0005 68%, #3D0000 82%, #1A0000 100%) !important;
+            --glass-bg: rgba(0, 0, 0, 0.15) !important;
+            --glass-hover: rgba(0, 0, 0, 0.25) !important;
+            
+            --text: #FFFFFF !important;
+            --text-muted: #FFB3B3 !important;
+            --text-faint: #CC6666 !important;
+            
+            --copper: #FF4D4D !important;
+            --copper-bright: #FF8080 !important;
+            --copper-dim: #990000 !important;
+            --copper-glow: rgba(255, 77, 77, 0.15) !important;
+            --copper-glow-strong: rgba(255, 77, 77, 0.3) !important;
+            
+            --border: rgba(255, 77, 77, 0.25) !important;
+            --rule: rgba(255, 77, 77, 0.15) !important;
+            
+            /* NEW: Force Light Inputs & Dark Text in Dark Mode */
+            --input-bg: rgba(255, 255, 255, 0.85) !important;
+            --input-text: #111827 !important;
+            --input-placeholder: #4B5563 !important;
+        }
+        
+        /* Deepen the shadows for Dark Mode */
+        div[data-testid="stForm"], .lmi-card, [data-testid="stMetric"], section[data-testid="stSidebar"] {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+        }
+        </style>
+        """
+        st.markdown(dark_theme, unsafe_allow_html=True)
+
+    # progress_tracker() 
     latest_result()
     quick_actions()
     about()

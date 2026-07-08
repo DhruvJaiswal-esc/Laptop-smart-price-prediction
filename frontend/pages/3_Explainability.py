@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import streamlit as st
 
 from api.client import explain
@@ -120,48 +121,52 @@ tab1, tab2, tab3, tab4 = st.tabs(["Details", "The Breakdown", "Double-Check", "R
 # DETAILS
 # =====================================================
 
-laptop_summary_card(input_information, title="What You Told Us")
+with tab1:
 
-st.divider()
+    laptop_summary_card(input_information, title="What You Told Us")
+
 
 # =====================================================
 # PRIMARY BREAKDOWN (SHAP)
 # =====================================================
 
-section_header("What Shaped This Price", "The main factors behind this number.")
+with tab2:
 
-shap_metrics(shap_result)
+    section_header("What Shaped This Price", "The main factors behind this number.")
 
-st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
+    shap_metrics(shap_result)
 
-show_plot(shap_feature_importance(shap_result))
+    st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
 
-show_plot(shap_positive_chart(shap_result))
-show_plot(shap_negative_chart(shap_result))
+    show_plot(shap_feature_importance(shap_result))
 
-st.divider()
+    show_plot(shap_positive_chart(shap_result))
+    show_plot(shap_negative_chart(shap_result))
+
 
 # =====================================================
 # CROSS-CHECK (LIME)
 # =====================================================
 
-section_header("A Second Opinion", "We checked our reasoning a different way — here's what that found.")
+with tab3:
 
-lime_metrics(lime_result)
+    section_header("A Second Opinion", "We checked our reasoning a different way — here's what that found.")
 
-st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
+    lime_metrics(lime_result)
 
-show_plot(lime_feature_importance(lime_result))
+    st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
 
-show_plot(lime_positive_chart(lime_result))
-show_plot(lime_negative_chart(lime_result))
+    show_plot(lime_feature_importance(lime_result))
 
-st.divider()
+    show_plot(lime_positive_chart(lime_result))
+    show_plot(lime_negative_chart(lime_result))
 
 
 # =====================================================
-# COMPLETE DATA
+# REPORT & RAW DATA
 # =====================================================
 
-with st.expander("Raw Developer Data", expanded=False):
-    st.json(result)
+with tab4:
+
+    with st.expander("Raw Developer Data", expanded=False):
+        st.json(result)

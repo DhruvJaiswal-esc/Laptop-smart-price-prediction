@@ -1,76 +1,20 @@
 /* =====================================================
    FONTS
-   Four distinct faces, one per role, so the eye never confuses
-   what it's reading with why it's reading it:
-     - Display (hero, big numerals in the quote strip): Space
-       Grotesk - geometric, technical, a little unconventional -
-       the closest thing this instrument panel has to a "brand".
-     - Headings (h1-h4, section titles, card titles): Fraunces -
-       a soft optical-size serif that warms up the graphite panel
-       instead of stacking another grotesque on top of the display
-       face. Gives every heading actual editorial weight.
-     - Body / prose (paragraphs, captions, labels, buttons): Archivo -
-       a grotesque distinct in width and rhythm from Space Grotesk,
-       so body copy never gets mistaken for a heading at a glance.
-     - Mono (numerals, tags, footer, eyebrows, code): Space Mono -
-       ticker-style monospace, pairs with Space Grotesk by design,
-       reads as "instrument readout" everywhere it appears.
 ===================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Share+Tech+Mono&family=Smooch+Sans:wght@100..900&family=Unica+One&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
-
-/* :root {
-    --bg: #0A0C0E;
-    --surface: #111417;
-    --surface-raised: #161A1E;
-    --card: #15181C;
-    --border: #2A2E33;
-    --rule: #1D2024;
-
-    --copper: #C97C3D;
-    --copper-bright: #E0954F;
-    --copper-dim: #8A5A2E;
-    --copper-glow: rgba(201, 124, 61, 0.12);
-    --copper-glow-strong: rgba(201, 124, 61, 0.22);
-
-    --cyan: #4FA6B0;
-    --cyan-dim: #356870;
-    --cyan-glow: rgba(79, 166, 176, 0.12);
-
-    --text: #EDEAE4;
-    --text-muted: #8A8F98;
-    --text-faint: #5A5F66;
-
-    --success: #5FA88A;
-    --success-glow: rgba(95, 168, 138, 0.12);
-    --warning: #C9A227;
-    --error: #B85450;
-    --error-glow: rgba(184, 84, 80, 0.12);
-
-    --display: 'Space Grotesk', 'Segoe UI', sans-serif;
-    --heading: 'Fraunces', 'Georgia', serif;
-    --sans: 'Archivo', 'Segoe UI', sans-serif;
-    --mono: 'Space Mono', 'Courier New', monospace;
-
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 24px;
-    --space-6: 32px;
-    --space-7: 48px;
-} */
+/* =====================================================
+   THEME VARIABLES (Defaults to Light Mode)
+===================================================== */
 :root {
-    --bg: #FFFFFF;
-    --surface: #F9FAFB;
-    --surface-raised: #FFFFFF;
-    --card: #FFFFFF;
-    --border: #E5E7EB;
-    --rule: #F3F4F6;
+    /* Light Mode: Soft Pink/White Gradient */
+    --bg-gradient: linear-gradient(-45deg, #D80045 0%, #C51520 14%, #E01818 30%, #E82828 48%, #D81515 64%, #E04060 80%, #F0A8B8 100%);
+    --glass-bg: rgba(255, 255, 255, 0.12);
+    --glass-hover: rgba(255, 255, 255, 0.22);
+
+    --text: #FFF5F5;
+    --text-muted: #E8C8CE;
+    --text-faint: #D0A8B0;
 
     --copper: #D92323; 
     --copper-bright: #EF4444;
@@ -82,46 +26,48 @@
     --cyan-dim: #374151;
     --cyan-glow: rgba(17, 24, 39, 0.05);
 
-    --text: #111827;
-    --text-muted: #4B5563;
-    --text-faint: #9CA3AF;
-
     --success: #111827; 
-    --success-glow: rgba(17, 24, 39, 0.08);
     --warning: #F59E0B;
     --error: #D92323;
-    --error-glow: rgba(217, 35, 35, 0.08);
+
+    --border: rgba(217, 35, 35, 0.15);
+    --rule: rgba(217, 35, 35, 0.08);
 
     --display: 'Space Grotesk', 'Segoe UI', sans-serif;
-    --heading: 'Fraunces', 'Georgia', serif;
-    --sans: 'Archivo', 'Segoe UI', sans-serif;
+    --heading: 'Unica One', 'Segoe UI', sans-serif;
+    --sans: 'Share Tech Mono', 'Courier New', monospace;
     --mono: 'Space Mono', 'Courier New', monospace;
 
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px;
 }
-/* =====================================================
-   GLOBAL
-===================================================== */
 
-html, body, [class*="css"] {
-    font-family: var(--sans);
-}
- /* .stApp {
-    background: linear-gradient(
-        145deg, 
-        rgba(224, 149, 79, 0.18) 0%,  
-        rgba(201, 124, 61, 0.08) 35%,  
-        var(--bg) 100%                
-    );
-    background-attachment: fixed;
-    color: var(--text);
-} */
+/* =====================================================
+   ANIMATED METALLIC BACKGROUND
+===================================================== */
 .stApp {
-    background: var(--bg) !important;
+    background: var(--bg-gradient) !important;
+    background-size: 300% 300% !important;
+    animation: gradientShine 15s ease infinite, fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     color: var(--text);
 }
+
+@keyframes gradientShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================
+   GLOBAL TYPOGRAPHY
+===================================================== */
+html, body, [class*="css"] { font-family: var(--sans); }
 
 h1, h2, h3, h4, h5 {
     font-family: var(--heading);
@@ -134,43 +80,11 @@ h2 { font-size: 22px; font-weight: 600; }
 h3 { font-size: 17px; font-weight: 600; }
 h4 { font-size: 14px; font-weight: 600; }
 
-p, li, span, label, div {
-    font-family: var(--sans);
-    color: var(--text);
-}
-
+p, li, span, label, div { font-family: var(--sans); color: var(--text); }
 a { color: var(--copper); }
 a:hover { color: var(--copper-bright); }
-
-code, .stCode, .stCodeBlock {
-    font-family: var(--mono) !important;
-}
-
-::selection {
-    background: var(--copper-glow-strong);
-    color: var(--text);
-}
-
-/* Eyebrow / label convention used throughout: small-caps, wide
-   tracking, muted color. This is the structural device that
-   replaces gradient card headers - it reads as an instrument
-   panel label, not a title. */
-.lmi-eyebrow {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin: 0 0 6px 0;
-}
-
-/* =====================================================
-   CAPTIONS / FOOTER
-   st.caption is this app's real footer (the native Streamlit
-   footer is hidden below) - rendered in the mono face so it
-   reads as a status line, not an afterthought in body prose.
-===================================================== */
+code, .stCode, .stCodeBlock { font-family: var(--mono) !important; }
+::selection { background: var(--copper-glow-strong); color: var(--text); }
 
 [data-testid="stCaptionContainer"], .stCaption, small {
     font-family: var(--mono) !important;
@@ -179,141 +93,162 @@ code, .stCode, .stCodeBlock {
     color: var(--text-muted) !important;
 }
 
-
-
-section[data-testid="stSidebar"] {
-    background: var(--surface);
-    border-right: 1px solid var(--rule);
+/* =====================================================
+   GLASS PANELS — Aero glass / frosted translucent panels
+   The key: backgrounds are nearly transparent so the
+   animated gradient bleeds through, and heavy blur
+   creates the frosted-glass diffusion.
+===================================================== */
+section[data-testid="stSidebar"],
+div[data-testid="stForm"],
+.lmi-card,
+[data-testid="stMetric"],
+.lmi-stat-strip,
+.lmi-quote,
+.lmi-empty,
+details,
+[data-testid="stPlotlyChart"] {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(40px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.30) !important;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        inset 0 1px 1px rgba(255, 255, 255, 0.30),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: var(--radius-lg) !important;
 }
 
-section[data-testid="stSidebar"] .block-container {
-    padding-top: 1.25rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+/* Hover: glass brightens and lifts */
+div[data-testid="stForm"]:hover,
+.lmi-card:hover,
+[data-testid="stMetric"]:hover,
+[data-testid="stPlotlyChart"]:hover {
+    background: var(--glass-hover) !important;
+    transform: translateY(-3px);
+    backdrop-filter: blur(48px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(48px) saturate(200%) !important;
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.18),
+        0 0 30px var(--copper-glow),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        inset 0 0 40px rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    border-top-color: rgba(255, 255, 255, 0.55) !important;
 }
 
-section[data-testid="stSidebar"] hr {
-    margin: 1.1rem 0;
-}
-
-/* Native page-nav list restyled to read as terminal menu items
-   rather than default Streamlit radio pills. */
-div[data-testid="stSidebarNav"] {
-    padding-top: 0.25rem;
-}
+[data-testid="stSidebarHeader"] { background: transparent !important; }
+section[data-testid="stSidebar"] hr { border-color: var(--rule) !important; }
 
 div[data-testid="stSidebarNav"] a {
     font-family: var(--mono);
     font-size: 12.5px;
-    letter-spacing: 0.02em;
     color: var(--text-muted);
     border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
 }
-
-div[data-testid="stSidebarNav"] a:hover {
-    background: var(--copper-glow);
-    color: var(--text);
-}
-
-div[data-testid="stSidebarNav"] a[aria-current="page"] {
-    background: var(--copper-glow-strong);
-    color: var(--copper-bright);
-    font-weight: 600;
-}
+div[data-testid="stSidebarNav"] a:hover { background: var(--copper-glow); color: var(--text); }
+div[data-testid="stSidebarNav"] a[aria-current="page"] { background: var(--copper-glow-strong); color: var(--copper-bright); font-weight: 600; }
 
 /* =====================================================
-   BUTTONS
-   Flat, not gradient. Copper fill only for primary actions;
-   everything else is an outlined rule-button.
+   GLASS: TABS
 ===================================================== */
-
-.stButton > button, .stFormSubmitButton > button, [data-testid="stDownloadButton"] button {
-    width: 100%;
-    height: 44px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 14px;
-    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
-    box-shadow: none;
+.stTabs [data-baseweb="tab-list"] {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(24px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+    border-radius: var(--radius-lg) !important;
+    border: 1px solid var(--border) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    padding: 4px !important;
+    gap: 4px !important;
 }
 
-.stButton > button:hover, .stFormSubmitButton > button:hover, [data-testid="stDownloadButton"] button:hover {
-    border-color: var(--copper);
-    background: var(--copper-glow);
-    color: var(--text);
-    transform: none;
-}
-
-.stButton > button:active, .stFormSubmitButton > button:active {
-    background: var(--copper-glow-strong);
-}
-
-.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
-    background: var(--copper);
-    border: 1px solid var(--copper);
-    color: #0A0C0E;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-}
-
-.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
-    background: var(--copper-bright);
-    border-color: var(--copper-bright);
-}
-
-/* =====================================================
-   METRICS
-   Native st.metric restyled: no card chrome, just a ruled cell
-   with a mono numeral - like a terminal quote strip.
-===================================================== */
-
-div[data-testid="stMetric"] {
-    background: transparent;
-    border: none;
-    border-top: 1px solid var(--rule);
-    border-radius: 0;
-    padding: 12px 0 0 0;
-    box-shadow: none;
-}
-
-div[data-testid="stMetricLabel"] {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted) !important;
-}
-
-div[data-testid="stMetricValue"] {
+.stTabs [data-baseweb="tab"] {
+    border-radius: var(--radius-md) !important;
+    transition: all 0.25s ease !important;
     font-family: var(--mono) !important;
-    font-weight: 600;
-    color: var(--copper) !important;
-    font-size: 26px !important;
+    font-size: 12px !important;
+    letter-spacing: 0.04em !important;
+    border: none !important;
 }
 
-div[data-testid="stMetricDelta"] svg { display: none; }
+.stTabs [data-baseweb="tab"]:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+}
+
+.stTabs [aria-selected="true"] {
+    background: var(--glass-hover) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    border-bottom: 2px solid var(--copper) !important;
+}
 
 /* =====================================================
-   INPUTS
+   GLASS: ALERTS & MESSAGES
 ===================================================== */
+[data-testid="stAlert"],
+.stAlert {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(24px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+    border: 1px solid var(--border) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
 
+/* =====================================================
+   GLASS: EXPANDER SUMMARY
+===================================================== */
+details > summary {
+    backdrop-filter: blur(16px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(130%) !important;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+    transition: all 0.25s ease !important;
+    border-bottom: 1px solid var(--rule) !important;
+}
+
+details > summary:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+details[open] > summary {
+    border-bottom: 1px solid var(--border) !important;
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* =====================================================
+   UNIVERSAL INPUTS (Always Light Bg, Dark Text)
+===================================================== */
 .stTextInput input, .stNumberInput input,
 .stSelectbox div[data-baseweb="select"] > div {
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    border: 1px solid var(--border);
-    font-family: var(--mono);
-    color: var(--text);
+    border-radius: var(--radius-sm) !important;
+    background: rgba(255, 255, 255, 0.85) !important; /* Forced Light */
+    border: 1px solid var(--border) !important;
+    font-family: var(--mono) !important;
+    color: #111827 !important; /* Forced Dark Text */
+    transition: all 0.2s ease !important;
+}
+
+.stSelectbox div[data-baseweb="select"] div { color: #111827 !important; }
+
+.stTextInput input:hover, .stNumberInput input:hover,
+.stSelectbox div[data-baseweb="select"] > div:hover {
+    border-color: var(--copper) !important;
+    background: #FFFFFF !important;
 }
 
 .stTextInput input:focus, .stNumberInput input:focus {
-    border-color: var(--copper);
-    box-shadow: 0 0 0 1px var(--copper);
+    border-color: var(--copper) !important;
+    box-shadow: 0 0 0 1px var(--copper), 0 0 12px var(--copper-glow-strong) !important;
+    background: #FFFFFF !important;
 }
 
 .stTextInput label, .stNumberInput label, .stSelectbox label {
@@ -325,271 +260,49 @@ div[data-testid="stMetricDelta"] svg { display: none; }
     color: var(--text-muted);
 }
 
-.stTextInput input::placeholder { color: var(--text-faint); opacity: 1; }
-
-/* Keyboard focus visibility across native controls */
-button:focus-visible, [tabindex]:focus-visible, input:focus-visible {
-    outline: 2px solid var(--copper);
-    outline-offset: 2px;
+.stTextInput input::placeholder, .stNumberInput input::placeholder { 
+    color: #4B5563 !important; /* Forced Dark Placeholder */
+    opacity: 1 !important; 
 }
+
+button:focus-visible, [tabindex]:focus-visible, input:focus-visible { outline: none; }
 
 /* =====================================================
-   FORM
+   BUTTONS
 ===================================================== */
-
-div[data-testid="stForm"] {
-    background: var(--surface);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    border: 1px solid var(--border);
-}
-
-/* =====================================================
-   TABS
-   Underline convention, no pill background - a ruled tab strip.
-===================================================== */
-
-div[data-baseweb="tab-list"] {
-    border-bottom: 1px solid var(--rule);
-    gap: 4px;
-}
-
-button[data-baseweb="tab"] {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    background: transparent;
-}
-
-button[data-baseweb="tab"]:hover {
-    color: var(--text);
-}
-
-button[data-baseweb="tab"][aria-selected="true"] {
-    color: var(--copper);
-    border-bottom: 2px solid var(--copper);
-}
-
-/* =====================================================
-   EXPANDERS
-===================================================== */
-
-details {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-}
-
-details:hover {
-    border-color: var(--copper-dim);
-}
-
-summary {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
-}
-
-/* =====================================================
-   DATAFRAME / TABLE / JSON
-===================================================== */
-
-div[data-testid="stDataFrame"], div[data-testid="stJson"] {
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-    overflow: hidden;
-}
-
-/* =====================================================
-   ALERTS
-   Left rule-bar instead of a filled colored box - quieter,
-   reads as an annotation rather than a banner ad.
-===================================================== */
-
-div[data-baseweb="notification"] {
+.stButton > button, .stFormSubmitButton > button, [data-testid="stDownloadButton"] button {
+    width: 100%;
+    height: 44px;
     border-radius: var(--radius-sm);
-    background: var(--surface) !important;
-    border-left: 3px solid var(--border);
-}
-
-div[data-testid="stNotificationContentSuccess"] { color: var(--success); }
-div[data-testid="stNotificationContentInfo"] { color: var(--cyan); }
-div[data-testid="stNotificationContentWarning"] { color: var(--warning); }
-div[data-testid="stNotificationContentError"] { color: var(--error); }
-
-/* =====================================================
-   PLOTLY
-===================================================== */
-
-.js-plotly-plot {
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-    overflow: hidden;
-}
-
-/* =====================================================
-   SCROLLBAR
-===================================================== */
-
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--copper-dim); }
-
-/* =====================================================
-   SIGNATURE: QUOTE STRIP
-   The prediction result renders like a ticker/instrument
-   readout: mono numerals, ruled cells, a directional glyph -
-   not a gradient hero card.
-===================================================== */
-
-.lmi-quote {
-    display: flex;
-    align-items: stretch;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background:
-        linear-gradient(135deg, var(--copper-glow), transparent 40%),
-        var(--surface);
-    position: relative;
-}
-
-.lmi-quote::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--copper);
-}
-
-.lmi-quote-cell {
-    flex: 1;
-    padding: 22px 26px;
-    border-right: 1px solid var(--rule);
-}
-
-.lmi-quote-cell:last-child { border-right: none; }
-
-.lmi-quote-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-}
-
-.lmi-quote-value {
-    font-family: var(--mono);
-    font-size: 32px;
-    font-weight: 600;
-    color: var(--copper);
-    line-height: 1.1;
-    font-variant-numeric: tabular-nums;
-}
-
-.lmi-quote-value.secondary {
+    border: 1px solid var(--copper);
+    background: transparent;
     color: var(--text);
-    font-size: 20px;
-}
-
-.lmi-quote-sub {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-faint);
-    margin-top: 8px;
-}
-
-/* =====================================================
-   RECOMMENDATION / SPEC CARDS
-   Flat ruled card, mono spec table, no gradient, no pill
-   badge - a thin outlined tag instead.
-===================================================== */
-
-.lmi-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 20px 22px;
-    margin-bottom: 14px;
-    transition: border-color 0.15s ease, transform 0.15s ease;
-}
-
-.lmi-card:hover {
-    border-color: var(--copper-dim);
-}
-
-.lmi-card-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: var(--heading);
-    font-size: 17px;
+    font-family: var(--sans);
     font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stButton > button:hover, .stFormSubmitButton > button:hover, [data-testid="stDownloadButton"] button:hover {
+    background: var(--copper-glow);
     color: var(--text);
-    margin-bottom: 12px;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--copper-glow);
 }
 
-.lmi-card-rank {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-faint);
-    font-weight: 500;
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
+    background: var(--copper) !important;
+    color: #FFFFFF !important; 
 }
 
-.lmi-card-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 7px 0;
-    border-top: 1px solid var(--rule);
-    font-size: 13px;
-}
-
-.lmi-card-row:first-of-type { border-top: none; }
-
-.lmi-card-row-label {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-.lmi-card-row-value {
-    font-family: var(--mono);
-    color: var(--text);
-    text-align: right;
-}
-
-.lmi-tag {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 3px 10px;
-    border: 1px solid var(--copper-dim);
-    border-radius: 999px;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--copper);
-}
-
-.lmi-tag.cyan {
-    border-color: var(--cyan-dim);
-    color: var(--cyan);
+.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
+    background: var(--copper-bright) !important;
+    border-color: var(--copper-bright) !important;
+    box-shadow: 0 4px 16px var(--copper-glow-strong) !important;
 }
 
 /* =====================================================
-   SECTION HEADER
+   CUSTOM DASHBOARD ELEMENTS (Fixing Claustrophobia)
 ===================================================== */
 
 .lmi-section {
@@ -599,272 +312,150 @@ div[data-testid="stNotificationContentError"] { color: var(--error); }
     margin-bottom: 20px;
     padding-bottom: 14px;
     border-bottom: 1px solid var(--rule);
-}
-
-.lmi-section-title {
-    font-family: var(--heading);
-    font-size: 21px;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0;
-}
-
-.lmi-section-subtitle {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 5px;
-}
-
-/* =====================================================
-   HERO
-===================================================== */
-
-.lmi-hero {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 44px 40px;
-    margin-bottom: 8px;
-    background:
-        linear-gradient(160deg, rgba(201,124,61,0.07), transparent 55%),
-        linear-gradient(340deg, rgba(79,166,176,0.05), transparent 50%),
-        var(--surface);
     position: relative;
-    overflow: hidden;
 }
-
-.lmi-hero::before {
+.lmi-section::after {
     content: "";
     position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
+    bottom: -1px; left: 0;
+    width: 60px; height: 2px;
     background: var(--copper);
+    box-shadow: 0 0 8px var(--copper-glow-strong);
 }
 
-.lmi-hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-bottom: 14px;
+.lmi-section-title { font-family: var(--heading); font-size: 21px; font-weight: 600; color: var(--text); margin: 0; }
+.lmi-section-subtitle { font-family: var(--mono); font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+
+/* FIX 1: MASSIVE PADDING FOR CARDS */
+.lmi-card { padding: 32px 36px !important; }
+.lmi-card-title { font-family: var(--heading); font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 16px; }
+.lmi-card-rank { font-family: var(--mono); font-size: 11px; color: var(--text-faint); font-weight: 500; }
+
+/* FIX 2: BREATHING ROOM BETWEEN CARD ROWS */
+.lmi-card-row { display: flex; justify-content: space-between; padding: 14px 0 !important; border-top: 1px solid var(--rule); font-size: 13px; }
+.lmi-card-row:first-of-type { border-top: none; }
+.lmi-card-row-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.lmi-card-row-value { font-family: var(--mono); color: var(--text); text-align: right; }
+
+/* FIX 3: MASSIVE PADDING FOR QUOTE STRIP */
+.lmi-quote { display: flex; overflow: hidden; position: relative; }
+.lmi-quote::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--copper); }
+.lmi-quote-cell { flex: 1; padding: 32px 36px !important; border-right: 1px solid var(--rule); }
+.lmi-quote-cell:last-child { border-right: none; }
+.lmi-quote-label { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.lmi-quote-value { font-family: var(--mono); font-size: 32px; font-weight: 600; color: var(--copper); line-height: 1.1; }
+.lmi-quote-value.secondary { color: var(--text); font-size: 20px; }
+
+/* Hero */
+.lmi-hero { background: transparent; padding: 44px 40px; margin-bottom: 8px; position: relative; }
+.lmi-hero-eyebrow { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper); margin-bottom: 14px; }
+.lmi-hero-title { font-family: var(--display); font-size: 40px; font-weight: 700; color: var(--text); margin: 0 0 12px 0; letter-spacing: -0.02em; }
+.lmi-hero-desc { font-size: 15px; color: var(--text-muted); max-width: 620px; line-height: 1.65; }
+
+/* Metrics */
+[data-testid="stMetric"] { padding: 20px 24px !important; }
+div[data-testid="stMetricLabel"] { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted) !important; margin-bottom: 8px; }
+div[data-testid="stMetricValue"] { font-family: var(--mono) !important; font-weight: 600; color: var(--text) !important; font-size: 28px !important; }
+div[data-testid="stMetricDelta"] svg { display: none; }
+div[data-testid="stMetricDelta"] > div { font-family: var(--mono) !important; font-size: 12px !important; }
+
+/* =====================================================
+   EXPLAINABILITY CHARTS (PLOTLY FIXES)
+===================================================== */
+
+/* Add heavy padding inside the new glassy chart container */
+[data-testid="stPlotlyChart"] {
+    padding: 24px !important;
 }
 
-.lmi-hero-eyebrow .lmi-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--success);
-    box-shadow: 0 0 0 3px var(--success-glow);
-}
-
-.lmi-hero-title {
-    font-family: var(--display);
-    font-size: 40px;
-    font-weight: 700;
-    color: var(--text);
-    margin: 0 0 12px 0;
-    letter-spacing: -0.02em;
-}
-
-.lmi-hero-desc {
-    font-size: 15px;
-    color: var(--text-muted);
-    max-width: 620px;
-    line-height: 1.65;
+/* Force Plotly's native white backgrounds to become entirely transparent */
+.js-plotly-plot .plotly svg.main-svg,
+.js-plotly-plot .plotly svg.main-svg .bg {
+    background: transparent !important;
+    fill: transparent !important;
 }
 
 /* =====================================================
-   STAT STRIP  (ticker row of small metrics under the hero)
+   MISCELLANEOUS
 ===================================================== */
+footer, [data-testid="stAppDeployButton"], [data-testid="stHeaderActionElements"] { display: none !important; }
+[data-testid="stHeader"] { background: transparent !important; }
+[data-testid="collapsedControl"] svg, [data-testid="stSidebarCollapseButton"] svg { color: var(--copper) !important; fill: var(--copper) !important; }
 
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--copper); }
+
+hr { border-color: var(--rule) !important; margin: 2.5em 0 !important; }
+/* =====================================================
+   RESTORED: EMPTY STATES (Fixing the cramped boxes)
+===================================================== */
+.lmi-empty {
+    padding: 64px 40px !important; /* Adds massive breathing room inside */
+    text-align: center !important; /* Centers the text */
+    margin-bottom: 24px !important;
+}
+
+.lmi-empty-icon { 
+    font-size: 28px; 
+    margin-bottom: 16px; 
+    color: var(--text-faint); 
+    font-family: var(--mono); 
+}
+
+.lmi-empty-title { 
+    font-family: var(--heading); 
+    font-size: 19px; 
+    font-weight: 600; 
+    color: var(--text); 
+    margin-bottom: 8px; 
+}
+
+.lmi-empty-desc { 
+    font-size: 14px; 
+    color: var(--text-muted); 
+    max-width: 450px; 
+    margin: 0 auto; 
+    line-height: 1.6; 
+}
+
+/* =====================================================
+   RESTORED: STAT STRIPS
+===================================================== */
 .lmi-stat-strip {
     display: flex;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: var(--surface);
-    margin: 28px 0 8px 0;
+    margin: 28px 0 24px 0 !important;
 }
 
 .lmi-stat {
     flex: 1;
-    padding: 18px 22px;
+    padding: 24px 28px !important;
     border-right: 1px solid var(--rule);
 }
 
-.lmi-stat:last-child { border-right: none; }
-
-.lmi-stat-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
+.lmi-stat:last-child { 
+    border-right: none; 
 }
 
-.lmi-stat-value {
-    font-family: var(--mono);
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text);
+.lmi-stat-label { 
+    font-family: var(--mono); 
+    font-size: 10.5px; 
+    font-weight: 600; 
+    letter-spacing: 0.1em; 
+    text-transform: uppercase; 
+    color: var(--text-muted); 
+    margin-bottom: 8px; 
 }
 
-.lmi-stat-value.on {
-    color: var(--success);
+.lmi-stat-value { 
+    font-family: var(--mono); 
+    font-size: 22px; 
+    font-weight: 600; 
+    color: var(--text); 
 }
 
-.lmi-stat-value.off {
-    color: var(--error);
-}
-
-/* =====================================================
-   STEP LIST (workflow) - numbered because order is real:
-   a stored prediction ID gates the next two pages.
-===================================================== */
-
-.lmi-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-.lmi-step {
-    display: flex;
-    gap: 16px;
-    padding: 16px 0;
-    border-top: 1px solid var(--rule);
-}
-
-.lmi-step:first-child { border-top: none; padding-top: 4px; }
-.lmi-step:last-child { padding-bottom: 4px; }
-
-.lmi-step-index {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--copper);
-    min-width: 22px;
-    padding-top: 2px;
-}
-
-.lmi-step-body-title {
-    font-family: var(--heading);
-    font-weight: 600;
-    font-size: 15.5px;
-    color: var(--text);
-    margin-bottom: 3px;
-}
-
-.lmi-step-body-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.55;
-}
-
-/* =====================================================
-   EMPTY STATE
-===================================================== */
-
-.lmi-empty {
-    border: 1px dashed var(--border);
-    border-radius: var(--radius-lg);
-    padding: 48px 32px;
-    text-align: center;
-    background: var(--surface);
-}
-
-.lmi-empty-icon {
-    font-size: 26px;
-    margin-bottom: 14px;
-    color: var(--text-faint);
-    font-family: var(--mono);
-}
-
-.lmi-empty-title {
-    font-family: var(--heading);
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-}
-
-.lmi-empty-desc {
-    font-size: 13.5px;
-    color: var(--text-muted);
-    max-width: 400px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
-/* =====================================================
-   PILL NAV (breadcrumb style workflow indicator)
-===================================================== */
-
-.lmi-crumb {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-faint);
-    margin-bottom: 4px;
-}
-
-.lmi-crumb .sep { color: var(--border); }
-.lmi-crumb .active { color: var(--copper); }
-
-/* =====================================================
-   MISC (Streamlit UI Overrides)
-===================================================== */
-
-/* 1. Hide the default footer */
-footer { display: none !important; }
-
-/* 2. Hide the "Deploy" button and right-side menu strictly by their direct tags */
-[data-testid="stAppDeployButton"],
-[data-testid="stHeaderActionElements"] { 
-    display: none !important; 
-}
-
-/* 3. Make the header completely transparent so your gradient shows through, 
-      but DO NOT apply visibility:hidden to it, or the arrow dies. */
-[data-testid="stHeader"] { 
-    background: transparent !important; 
-}
-
-/* 4. Ensure the arrow matches your copper theme */
-[data-testid="collapsedControl"] svg,
-[data-testid="stSidebarCollapseButton"] svg {
-    color: var(--copper) !important;
-    fill: var(--copper) !important;
-}
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width: 900px) {
-    .lmi-hero { padding: 30px 24px; }
-    .lmi-hero-title { font-size: 28px; }
-    .lmi-quote { flex-direction: column; }
-    .lmi-quote-cell { border-right: none; border-bottom: 1px solid var(--rule); }
-    .lmi-quote-cell:last-child { border-bottom: none; }
-    .lmi-stat-strip { flex-direction: column; }
-    .lmi-stat { border-right: none; border-bottom: 1px solid var(--rule); }
-    .lmi-stat:last-child { border-bottom: none; }
-}
-
-/* Respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; animation: none !important; }
+/* Add spacing below metrics and cards so they don't touch */
+[data-testid="stMetric"], .lmi-card {
+    margin-bottom: 20px !important;
 }
