@@ -110,7 +110,7 @@ def laptop_input_form():
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            battery_capacity = st.number_input("Battery (Wh)", min_value=20, max_value=120, value=0)
+            battery_capacity = st.number_input("Battery (Wh)", min_value=20, max_value=120, value=46)
 
         with col2:
             battery_type = st.selectbox("Battery Type", BATTERY_TYPES)
