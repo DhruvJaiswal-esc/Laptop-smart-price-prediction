@@ -65,36 +65,73 @@ BACKGROUND_PATH = ASSETS_DIR / "background.png"
 CSS_PATH = STYLE_DIR / "style.css"
 
 
+# # =====================================================
+# # THEME
+# # Graphite terminal palette. Copper reads as "value" (price,
+# # positive signal, primary action). Cold cyan reads as
+# # "comparison / secondary read". This is a ticker convention,
+# # not one brand color reused for everything.
+# # =====================================================
+
+# PRIMARY_COLOR = "#C97C3D"       # copper - value, price, primary CTAs
+# PRIMARY_COLOR_BRIGHT = "#E0954F"
+# PRIMARY_COLOR_DIM = "#8A5A2E"   # muted copper for borders/hover states
+
+# SECONDARY_COLOR = "#4FA6B0"     # cold cyan - comparison / secondary accent
+# SECONDARY_COLOR_DIM = "#356870"
+
+# SUCCESS_COLOR = "#5FA88A"       # desaturated sage
+# WARNING_COLOR = "#C9A227"
+# ERROR_COLOR = "#B85450"         # muted brick red
+
+# BACKGROUND_COLOR = "#0A0C0E"    # near-black graphite
+# SURFACE_COLOR = "#111417"       # panel background, one step up from bg
+# SURFACE_RAISED = "#161A1E"      # elevated panel (hover / active)
+# CARD_COLOR = "#15181C"
+
+# TEXT_COLOR = "#EDEAE4"          # warm off-white
+# TEXT_MUTED = "#8A8F98"
+# TEXT_FAINT = "#5A5F66"
+
+# BORDER_COLOR = "#2A2E33"
+# RULE_COLOR = "#1D2024"          # hairline dividers
 # =====================================================
 # THEME
-# Graphite terminal palette. Copper reads as "value" (price,
-# positive signal, primary action). Cold cyan reads as
-# "comparison / secondary read". This is a ticker convention,
-# not one brand color reused for everything.
+# Clean light mode palette: White backgrounds, crisp black text,
+# and sharp red as the primary action/accent color.
 # =====================================================
 
-PRIMARY_COLOR = "#C97C3D"       # copper - value, price, primary CTAs
-PRIMARY_COLOR_BRIGHT = "#E0954F"
-PRIMARY_COLOR_DIM = "#8A5A2E"   # muted copper for borders/hover states
+PRIMARY_COLOR = "#D92323"       # Sharp Red - value, price, primary CTAs
+PRIMARY_COLOR_BRIGHT = "#EF4444"
+PRIMARY_COLOR_DIM = "#991B1B"   
 
-SECONDARY_COLOR = "#4FA6B0"     # cold cyan - comparison / secondary accent
-SECONDARY_COLOR_DIM = "#356870"
+SECONDARY_COLOR = "#111827"     # Stark Black - comparison / secondary accent
+SECONDARY_COLOR_DIM = "#374151"
 
-SUCCESS_COLOR = "#5FA88A"       # desaturated sage
-WARNING_COLOR = "#C9A227"
-ERROR_COLOR = "#B85450"         # muted brick red
+SUCCESS_COLOR = "#111827"       # Black for neutral success states
+WARNING_COLOR = "#F59E0B"
+ERROR_COLOR = "#D92323"         # Sharp Red
 
-BACKGROUND_COLOR = "#0A0C0E"    # near-black graphite
-SURFACE_COLOR = "#111417"       # panel background, one step up from bg
-SURFACE_RAISED = "#161A1E"      # elevated panel (hover / active)
-CARD_COLOR = "#15181C"
+BACKGROUND_COLOR = "#FFFFFF"    # Pure White
+SURFACE_COLOR = "#F9FAFB"       # Very light gray for panels
+SURFACE_RAISED = "#FFFFFF"      
+CARD_COLOR = "#FFFFFF"
 
-TEXT_COLOR = "#EDEAE4"          # warm off-white
-TEXT_MUTED = "#8A8F98"
-TEXT_FAINT = "#5A5F66"
+TEXT_COLOR = "#111827"          # Almost black
+TEXT_MUTED = "#4B5563"          # Medium gray
+TEXT_FAINT = "#9CA3AF"          # Light gray
 
-BORDER_COLOR = "#2A2E33"
-RULE_COLOR = "#1D2024"          # hairline dividers
+BORDER_COLOR = "#E5E7EB"        # Soft gray borders
+RULE_COLOR = "#F3F4F6"          # Hairline dividers
+
+# =====================================================
+# CHART COLORS
+# =====================================================
+
+POSITIVE_COLOR = "#111827"      # Black (Pushed price up)
+NEGATIVE_COLOR = "#D92323"      # Red (Pushed price down)
+NEUTRAL_COLOR = "#9CA3AF"       # Light Gray
+GRID_COLOR = "#F3F4F6"
 
 
 # =====================================================

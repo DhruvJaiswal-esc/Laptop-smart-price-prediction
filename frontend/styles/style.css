@@ -19,7 +19,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
-:root {
+/* :root {
     --bg: #0A0C0E;
     --surface: #111417;
     --surface-raised: #161A1E;
@@ -63,8 +63,44 @@
     --space-5: 24px;
     --space-6: 32px;
     --space-7: 48px;
-}
+} */
+:root {
+    --bg: #FFFFFF;
+    --surface: #F9FAFB;
+    --surface-raised: #FFFFFF;
+    --card: #FFFFFF;
+    --border: #E5E7EB;
+    --rule: #F3F4F6;
 
+    --copper: #D92323; 
+    --copper-bright: #EF4444;
+    --copper-dim: #991B1B;
+    --copper-glow: rgba(217, 35, 35, 0.08);
+    --copper-glow-strong: rgba(217, 35, 35, 0.15);
+
+    --cyan: #111827;
+    --cyan-dim: #374151;
+    --cyan-glow: rgba(17, 24, 39, 0.05);
+
+    --text: #111827;
+    --text-muted: #4B5563;
+    --text-faint: #9CA3AF;
+
+    --success: #111827; 
+    --success-glow: rgba(17, 24, 39, 0.08);
+    --warning: #F59E0B;
+    --error: #D92323;
+    --error-glow: rgba(217, 35, 35, 0.08);
+
+    --display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --heading: 'Fraunces', 'Georgia', serif;
+    --sans: 'Archivo', 'Segoe UI', sans-serif;
+    --mono: 'Space Mono', 'Courier New', monospace;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
 /* =====================================================
    GLOBAL
 ===================================================== */
@@ -72,15 +108,18 @@
 html, body, [class*="css"] {
     font-family: var(--sans);
 }
-
-.stApp {
+ /* .stApp {
     background: linear-gradient(
         145deg, 
-        rgba(224, 149, 79, 0.18) 0%,   /* Bright copper/gold */
-        rgba(201, 124, 61, 0.08) 35%,  /* Mid-tone copper */
-        var(--bg) 100%                 /* Fades seamlessly into your dark background */
+        rgba(224, 149, 79, 0.18) 0%,  
+        rgba(201, 124, 61, 0.08) 35%,  
+        var(--bg) 100%                
     );
     background-attachment: fixed;
+    color: var(--text);
+} */
+.stApp {
+    background: var(--bg) !important;
     color: var(--text);
 }
 
