@@ -1,121 +1,84 @@
 from pathlib import Path
+import os
 
 # =====================================================
-# PROJECT INFORMATION
+# PROJECT INFO
 # =====================================================
 
 PROJECT_NAME = "Laptop Price Checker"
-
-PROJECT_SHORT_NAME = "Price Checker"
-
 PROJECT_TITLE = "Laptop Price Checker"
-
-PROJECT_TAGLINE = "A clear, no-nonsense way to price a laptop."
-
+PROJECT_TAGLINE = "Smart pricing, clear answers."
 PAGE_TITLE = "Laptop Price Checker"
-
 PAGE_ICON = "◈"
-
 LAYOUT = "wide"
-
-INITIAL_SIDEBAR_STATE = "expanded"
-
 
 # =====================================================
 # API
 # =====================================================
 
-import os
-
-API_BASE_URL = os.getenv(
-    "API_BASE_URL",
-    "http://127.0.0.1:8000"
-)
-
+API_BASE_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
 PREDICTION_ENDPOINT = f"{API_BASE_URL}/prediction"
-
 RECOMMENDATION_ENDPOINT = f"{API_BASE_URL}/recommendation"
-
 EXPLAINABILITY_ENDPOINT = f"{API_BASE_URL}/explainability"
-
-
-# =====================================================
-# REQUEST SETTINGS
-# =====================================================
-
 REQUEST_TIMEOUT = 120
-
 VERIFY_SSL = False
-
 
 # =====================================================
 # DIRECTORIES
 # =====================================================
 
 BASE_DIR = Path(__file__).resolve().parent
-
 ASSETS_DIR = BASE_DIR / "assets"
-
 STYLE_DIR = BASE_DIR / "styles"
-
-LOGO_PATH = ASSETS_DIR / "logo.png"
-
-BACKGROUND_PATH = ASSETS_DIR / "background.png"
-
 CSS_PATH = STYLE_DIR / "style.css"
 
-
 # =====================================================
-# THEME
-# Graphite terminal palette. Copper reads as "value" (price,
-# positive signal, primary action). Cold cyan reads as
-# "comparison / secondary read". This is a ticker convention,
-# not one brand color reused for everything.
+# THEME — Glassmorphism over mesh gradient
+# Indigo → Purple → Pink (harmonious, no clashing)
 # =====================================================
 
-PRIMARY_COLOR = "#C97C3D"       # copper - value, price, primary CTAs
-PRIMARY_COLOR_BRIGHT = "#E0954F"
-PRIMARY_COLOR_DIM = "#8A5A2E"   # muted copper for borders/hover states
+PRIMARY_COLOR = "#A855F7"          # purple
+PRIMARY_COLOR_BRIGHT = "#C084FC"
+PRIMARY_COLOR_DIM = "#9333EA"
 
-SECONDARY_COLOR = "#4FA6B0"     # cold cyan - comparison / secondary accent
-SECONDARY_COLOR_DIM = "#356870"
+SECONDARY_COLOR = "#6366F1"        # indigo
+SECONDARY_COLOR_DIM = "#4F46E5"
 
-SUCCESS_COLOR = "#5FA88A"       # desaturated sage
-WARNING_COLOR = "#C9A227"
-ERROR_COLOR = "#B85450"         # muted brick red
+TERTIARY_COLOR = "#EC4899"         # pink
+TERTIARY_COLOR_DIM = "#DB2777"
 
-BACKGROUND_COLOR = "#0A0C0E"    # near-black graphite
-SURFACE_COLOR = "#111417"       # panel background, one step up from bg
-SURFACE_RAISED = "#161A1E"      # elevated panel (hover / active)
-CARD_COLOR = "#15181C"
+SUCCESS_COLOR = "#22C55E"
+WARNING_COLOR = "#F59E0B"
+ERROR_COLOR = "#EF4444"
 
-TEXT_COLOR = "#EDEAE4"          # warm off-white
-TEXT_MUTED = "#8A8F98"
-TEXT_FAINT = "#5A5F66"
+BACKGROUND_COLOR = "#0D0D1A"
+SURFACE_COLOR = "#FFFFFF"
+SURFACE_RAISED = "#F8FAFF"
 
-BORDER_COLOR = "#2A2E33"
-RULE_COLOR = "#1D2024"          # hairline dividers
+TEXT_COLOR = "#F1F5F9"
+TEXT_MUTED = "#94A3B8"
+TEXT_FAINT = "#64748B"
 
+BORDER_COLOR = "#1E1E38"
+RULE_COLOR = "#1E1E38"
 
 # =====================================================
 # TYPOGRAPHY
 # =====================================================
 
-FONT_MONO = "'Space Mono', 'Courier New', monospace"
-FONT_SANS = "'Archivo', 'Segoe UI', sans-serif"
-FONT_HEADING = "'Fraunces', 'Georgia', serif"
-FONT_DISPLAY = "'Space Grotesk', 'Segoe UI', sans-serif"
-
+FONT_MONO = "'JetBrains Mono', 'Courier New', monospace"
+FONT_SANS = "'Inter', 'Segoe UI', sans-serif"
+FONT_HEADING = "'Sora', 'Segoe UI', sans-serif"
+FONT_DISPLAY = "'Sora', 'Segoe UI', sans-serif"
 
 # =====================================================
 # CHART COLORS
 # =====================================================
 
-POSITIVE_COLOR = "#5FA88A"
-NEGATIVE_COLOR = "#B85450"
-NEUTRAL_COLOR = "#C97C3D"
-GRID_COLOR = "#1D2024"
-
+POSITIVE_COLOR = "#22C55E"
+NEGATIVE_COLOR = "#EF4444"
+NEUTRAL_COLOR = "#A855F7"
+GRID_COLOR = "#1E1E38"
 
 # =====================================================
 # SESSION STATE DEFAULTS
@@ -129,25 +92,19 @@ SESSION_DEFAULTS = {
     "prediction_complete": False,
     "laptop_information": None,
     "api_connected": False,
+    "current_page": "home",
 }
-
 
 # =====================================================
 # FORM OPTIONS
 # =====================================================
 
 RAM_TYPES = ["DDR4", "DDR5", "LPDDR4X", "LPDDR5", "LPDDR5X"]
-
 SSD_TYPES = ["M.2 NVMe", "SATA"]
-
 BATTERY_TYPES = ["Li-Ion", "Li-Polymer"]
-
 WARRANTY_OPTIONS = [1, 2, 3]
-
 WIFI_OPTIONS = ["Wi-Fi 5", "Wi-Fi 6", "Wi-Fi 6E", "Wi-Fi 7"]
-
-BLUETOOTH_OPTIONS = ["5.0", "5.1", "5.2", "5.3", "5.4","6.0"]
-
+BLUETOOTH_OPTIONS = ["5.0", "5.1", "5.2", "5.3", "5.4", "6.0"]
 
 # =====================================================
 # LOADING MESSAGES
@@ -157,7 +114,6 @@ SPINNER_PREDICTION = "Working out a price…"
 SPINNER_RECOMMENDATION = "Looking for similar laptops…"
 SPINNER_EXPLAINABILITY = "Breaking down what shaped this price…"
 
-
 # =====================================================
 # PAGE CONFIG
 # =====================================================
@@ -166,5 +122,5 @@ PAGE_CONFIG = {
     "page_title": PAGE_TITLE,
     "page_icon": PAGE_ICON,
     "layout": LAYOUT,
-    "initial_sidebar_state": INITIAL_SIDEBAR_STATE,
+    "initial_sidebar_state": "expanded",
 }
