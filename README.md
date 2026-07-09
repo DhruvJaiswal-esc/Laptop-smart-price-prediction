@@ -323,7 +323,7 @@ K.R. Mangalam University
 GitHub: https://github.com/Dhruv-Jaiswalesc
 
 <p align="center">
-    <img src="ss.png">
+    <img src="">
 </p>
 <p align="center">
     <img src="ss2.png">
