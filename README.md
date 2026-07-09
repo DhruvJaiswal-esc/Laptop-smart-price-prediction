@@ -332,4 +332,7 @@ GitHub: https://github.com/Dhruv-Jaiswalesc
 
 </div>
 #Screenshots
- ![alt text](image.png)
+![alt text](ss.png)
+![alt text](ss2.png)
+![alt text](ss3.png)
+![alt text](ss4.png)
