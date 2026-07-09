@@ -176,7 +176,7 @@ Recommendation  Explainability
 ## Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Laptop-Market-Intelligence.git
+git clone https://github.com/DhruvJaiswal-esc/Laptop-smart-price-prediction.git
 
 cd Laptop-Market-Intelligence
 ```
