@@ -322,7 +322,18 @@ K.R. Mangalam University
 
 GitHub: https://github.com/Dhruv-Jaiswalesc
 
-
+<p align="center">
+    <img src="ss.png">
+</p>
+<p align="center">
+    <img src="ss2.png">
+</p>
+<p align="center">
+    <img src="ss3.png">
+</p>
+<p align="center">
+    <img src="ss4.png">
+</p>
 
 ---
 
@@ -331,8 +342,3 @@ GitHub: https://github.com/Dhruv-Jaiswalesc
 ### ⭐ If you found this project interesting, consider giving it a Star!
 
 </div>
-#Screenshots
-![alt text](ss.png)
-![alt text](ss2.png)
-![alt text](ss3.png)
-![alt text](ss4.png)
