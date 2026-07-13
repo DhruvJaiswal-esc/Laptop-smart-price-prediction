@@ -1,20 +1,20 @@
 /* =====================================================
    FONTS
 ===================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Share+Tech+Mono&family=Smooch+Sans:wght@100..900&family=Unica+One&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* =====================================================
    THEME VARIABLES (Defaults to Light Mode)
 ===================================================== */
 :root {
-    /* Light Mode: Soft Pink/White Gradient */
-    --bg-gradient: linear-gradient(-45deg, #D80045 0%, #C51520 14%, #E01818 30%, #E82828 48%, #D81515 64%, #E04060 80%, #F0A8B8 100%);
+    /* Light Mode: Soft Blush/Peach Mesh Gradient */
+    --bg-gradient: linear-gradient(-45deg, #FFFFFF 0%, #FFF6F2 15%, #FFEBE4 32%, #FFD6D6 50%, #FFC4C8 65%, #FFE3D9 82%, #FFFFFF 100%);
     --glass-bg: rgba(255, 255, 255, 0.12);
     --glass-hover: rgba(255, 255, 255, 0.22);
 
-    --text: #FFF5F5;
-    --text-muted: #E8C8CE;
-    --text-faint: #D0A8B0;
+    --text: #1A1315;
+    --text-muted: #6B5458;
+    --text-faint: #A88A8F;
 
     --copper: #D92323; 
     --copper-bright: #EF4444;
@@ -33,10 +33,10 @@
     --border: rgba(217, 35, 35, 0.15);
     --rule: rgba(217, 35, 35, 0.08);
 
-    --display: 'Space Grotesk', 'Segoe UI', sans-serif;
-    --heading: 'Unica One', 'Segoe UI', sans-serif;
-    --sans: 'Share Tech Mono', 'Courier New', monospace;
-    --mono: 'Space Mono', 'Courier New', monospace;
+    --display: 'Fraunces', 'Georgia', serif;
+    --heading: 'Fraunces', 'Georgia', serif;
+    --sans: 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
 
     --radius-sm: 4px;
     --radius-md: 8px;

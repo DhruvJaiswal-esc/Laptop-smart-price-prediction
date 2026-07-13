@@ -295,7 +295,7 @@ def render_sidebar():
         <style>
         :root {
             /* Dark Mode: Vibrant Red/Crimson Gradient */
-            --bg-gradient: linear-gradient(-45deg, #1A0000 0%, #3D0005 18%, #7A0A0A 38%, #A50000 52%, #7A0005 68%, #3D0000 82%, #1A0000 100%) !important;
+            --bg-gradient: linear-gradient(-45deg, #FF3B3B 0%, #E81010 20%, #D80808 40%, #F02020 55%, #FF2255 72%, #E01818 88%, #FF3B3B 100%) !important;
             --glass-bg: rgba(0, 0, 0, 0.15) !important;
             --glass-hover: rgba(0, 0, 0, 0.25) !important;
             
