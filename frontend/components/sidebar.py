@@ -223,7 +223,7 @@ def quick_actions():
 
     st.sidebar.divider()
 
-    if st.sidebar.button("↺  Start Over", use_container_width=True):
+    if st.sidebar.button("↺  Start Over", use_container_width=True, key="lmi_start_over_btn"):
 
         keys = [
             "prediction",
@@ -281,50 +281,81 @@ def render_sidebar():
     
     st.sidebar.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
     
-    # 1. BULLETPROOF MULTIPAGE MEMORY:
-    # We use a custom session_state variable instead of relying on the widget's internal key
+    # Dark mode toggle. session_state (not the widget's own key) is
+    # what survives Streamlit's per-page script reruns in this
+    # multipage app - see the note above initialize_session().
     if "theme_state" not in st.session_state:
         st.session_state.theme_state = False
 
-    # 2. THE TOGGLE WIDGET:
     is_dark = st.sidebar.toggle("🌗 Dark Mode", value=st.session_state.theme_state)
     st.session_state.theme_state = is_dark
-    
+
+    # Every color is already defined for both themes as CSS variables
+    # in style.css (.stApp default vs the block below). Streamlit
+    # strips <script> tags out of st.markdown output, so a JS-based
+    # class toggle silently does nothing - conditionally emitting a
+    # plain <style> block instead works because <style> tags aren't
+    # stripped, and st.markdown's HTML lands in the same document
+    # .stApp lives in (it isn't iframed the way custom components are).
     if st.session_state.theme_state:
-        dark_theme = """
-        <style>
-        :root {
-            /* Dark Mode: Vibrant Red/Crimson Gradient */
-            --bg-gradient: linear-gradient(-45deg, #FF3B3B 0%, #E81010 20%, #D80808 40%, #F02020 55%, #FF2255 72%, #E01818 88%, #FF3B3B 100%) !important;
-            --glass-bg: rgba(0, 0, 0, 0.15) !important;
-            --glass-hover: rgba(0, 0, 0, 0.25) !important;
-            
-            --text: #FFFFFF !important;
-            --text-muted: #FFB3B3 !important;
-            --text-faint: #CC6666 !important;
-            
-            --copper: #FF4D4D !important;
-            --copper-bright: #FF8080 !important;
-            --copper-dim: #990000 !important;
-            --copper-glow: rgba(255, 77, 77, 0.15) !important;
-            --copper-glow-strong: rgba(255, 77, 77, 0.3) !important;
-            
-            --border: rgba(255, 77, 77, 0.25) !important;
-            --rule: rgba(255, 77, 77, 0.15) !important;
-            
-            /* NEW: Force Light Inputs & Dark Text in Dark Mode */
-            --input-bg: rgba(255, 255, 255, 0.85) !important;
-            --input-text: #111827 !important;
-            --input-placeholder: #4B5563 !important;
-        }
-        
-        /* Deepen the shadows for Dark Mode */
-        div[data-testid="stForm"], .lmi-card, [data-testid="stMetric"], section[data-testid="stSidebar"] {
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
-        }
-        </style>
-        """
-        st.markdown(dark_theme, unsafe_allow_html=True)
+        st.markdown(
+            """
+            <style>
+            .stApp {
+                --bg-base: #0A0C0E !important;
+                --blob-1: #241012 !important;
+                --blob-2: #1C1416 !important;
+                --blob-3: #1A1210 !important;
+                --blob-4: #150F10 !important;
+                --glass-bg: rgba(255, 255, 255, 0.035) !important;
+                --glass-hover: rgba(255, 255, 255, 0.06) !important;
+
+                --text: #EDEAE4 !important;
+                --text-muted: #9CA3AF !important;
+                --text-faint: #5A5F66 !important;
+
+                --copper: #E0954F !important;
+                --copper-bright: #F0AC6E !important;
+                --copper-dim: #8A5A2E !important;
+                --copper-glow: rgba(224, 149, 79, 0.10) !important;
+                --copper-glow-strong: rgba(224, 149, 79, 0.20) !important;
+
+                --cyan: #EDEAE4 !important;
+                --cyan-dim: #9CA3AF !important;
+                --cyan-glow: rgba(237, 234, 228, 0.05) !important;
+
+                --success: #EDEAE4 !important;
+                --warning: #C9A227 !important;
+                --error: #E0765F !important;
+
+                --border: rgba(224, 149, 79, 0.18) !important;
+                --rule: rgba(255, 255, 255, 0.06) !important;
+            }
+            .stTextInput input, .stNumberInput input,
+            .stSelectbox div[data-baseweb="select"] > div {
+                background: rgba(255, 255, 255, 0.05) !important;
+                color: var(--text) !important;
+                border-color: var(--border) !important;
+            }
+            .stSelectbox div[data-baseweb="select"] div {
+                color: var(--text) !important;
+            }
+            .stTextInput input:hover, .stNumberInput input:hover,
+            .stSelectbox div[data-baseweb="select"] > div:hover {
+                background: rgba(255, 255, 255, 0.08) !important;
+                border-color: var(--copper) !important;
+            }
+            .stTextInput input:focus, .stNumberInput input:focus {
+                background: rgba(255, 255, 255, 0.08) !important;
+                border-color: var(--copper) !important;
+            }
+            .stTextInput input::placeholder, .stNumberInput input::placeholder {
+                color: var(--text-faint) !important;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
     # progress_tracker() 
     latest_result()

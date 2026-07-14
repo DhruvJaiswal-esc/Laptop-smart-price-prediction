@@ -7,8 +7,12 @@
    THEME VARIABLES (Defaults to Light Mode)
 ===================================================== */
 :root {
-    /* Light Mode: Soft Blush/Peach Mesh Gradient */
-    --bg-gradient: linear-gradient(-45deg, #FFFFFF 0%, #FFF6F2 15%, #FFEBE4 32%, #FFD6D6 50%, #FFC4C8 65%, #FFE3D9 82%, #FFFFFF 100%);
+    /* Light Mode: Soft Blush/Peach Lava-Lamp Blobs */
+    --bg-base: #FFF8F6;
+    --blob-1: #FFD6D6;
+    --blob-2: #FFC4C8;
+    --blob-3: #FFE3D9;
+    --blob-4: #FFEBE4;
     --glass-bg: rgba(255, 255, 255, 0.12);
     --glass-hover: rgba(255, 255, 255, 0.22);
 
@@ -43,20 +47,56 @@
     --radius-lg: 12px;
 }
 
+/* Dark mode overrides are NOT here - Streamlit strips <script> tags
+   from st.markdown output, so a CSS-class-based toggle (which would
+   belong here) has no way to actually get applied. Instead,
+   components/sidebar.py conditionally emits the full override block
+   as a plain <style> tag when theme_state is True. That's the only
+   dark-mode logic in this app; if you're changing dark-mode colors,
+   edit the block in sidebar.py, not here. */
+
 /* =====================================================
    ANIMATED METALLIC BACKGROUND
 ===================================================== */
 .stApp {
-    background: var(--bg-gradient) !important;
-    background-size: 300% 300% !important;
-    animation: gradientShine 15s ease infinite, fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background:
+        radial-gradient(circle at 20% 30%, var(--blob-1) 0%, transparent 45%),
+        radial-gradient(circle at 80% 20%, var(--blob-2) 0%, transparent 50%),
+        radial-gradient(circle at 30% 80%, var(--blob-3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, var(--blob-4) 0%, transparent 45%),
+        var(--bg-base) !important;
+    background-size: 180% 180%, 200% 200%, 190% 190%, 210% 210%, 100% 100% !important;
+    animation:
+        blob1 22s ease-in-out infinite,
+        blob2 28s ease-in-out infinite,
+        blob3 25s ease-in-out infinite,
+        blob4 19s ease-in-out infinite,
+        fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     color: var(--text);
 }
 
-@keyframes gradientShine {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes blob1 {
+    0%, 100% { background-position: 0% 0%, 0 0, 0 0, 0 0, 0 0; }
+    33% { background-position: 60% 40%, 0 0, 0 0, 0 0, 0 0; }
+    66% { background-position: 20% 70%, 0 0, 0 0, 0 0, 0 0; }
+}
+
+@keyframes blob2 {
+    0%, 100% { background-position: 0 0, 100% 0%, 0 0, 0 0, 0 0; }
+    33% { background-position: 0 0, 40% 60%, 0 0, 0 0, 0 0; }
+    66% { background-position: 0 0, 70% 20%, 0 0, 0 0, 0 0; }
+}
+
+@keyframes blob3 {
+    0%, 100% { background-position: 0 0, 0 0, 30% 100%, 0 0, 0 0; }
+    33% { background-position: 0 0, 0 0, 65% 50%, 0 0, 0 0; }
+    66% { background-position: 0 0, 0 0, 10% 30%, 0 0, 0 0; }
+}
+
+@keyframes blob4 {
+    0%, 100% { background-position: 0 0, 0 0, 0 0, 80% 80%, 0 0; }
+    33% { background-position: 0 0, 0 0, 0 0, 30% 40%, 0 0; }
+    66% { background-position: 0 0, 0 0, 0 0, 60% 10%, 0 0; }
 }
 
 @keyframes fadeIn {

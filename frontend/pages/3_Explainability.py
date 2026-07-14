@@ -98,7 +98,6 @@ prediction = result["prediction"]
 input_information = result["input"]
 shap_result = result["shap"]
 lime_result = result["lime"]
-report_path = result["report"]
 
 
 # =====================================================
@@ -111,62 +110,53 @@ st.divider()
 
 
 # =====================================================
-# TABS
-# =====================================================
-
-tab1, tab2, tab3, tab4 = st.tabs(["Details", "The Breakdown", "Double-Check", "Report"])
-
-
-# =====================================================
 # DETAILS
 # =====================================================
 
-with tab1:
+laptop_summary_card(input_information, title="What You Told Us")
 
-    laptop_summary_card(input_information, title="What You Told Us")
+st.divider()
 
 
 # =====================================================
 # PRIMARY BREAKDOWN (SHAP)
 # =====================================================
 
-with tab2:
+section_header("What Shaped This Price", "The main factors behind this number.")
 
-    section_header("What Shaped This Price", "The main factors behind this number.")
+shap_metrics(shap_result)
 
-    shap_metrics(shap_result)
+st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
+show_plot(shap_feature_importance(shap_result))
 
-    show_plot(shap_feature_importance(shap_result))
+show_plot(shap_positive_chart(shap_result))
+show_plot(shap_negative_chart(shap_result))
 
-    show_plot(shap_positive_chart(shap_result))
-    show_plot(shap_negative_chart(shap_result))
+st.divider()
 
 
 # =====================================================
 # CROSS-CHECK (LIME)
 # =====================================================
 
-with tab3:
+section_header("A Second Opinion", "We checked our reasoning a different way — here's what that found.")
 
-    section_header("A Second Opinion", "We checked our reasoning a different way — here's what that found.")
+lime_metrics(lime_result)
 
-    lime_metrics(lime_result)
+st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='margin-top:8px'></div>", unsafe_allow_html=True)
+show_plot(lime_feature_importance(lime_result))
 
-    show_plot(lime_feature_importance(lime_result))
-
-    show_plot(lime_positive_chart(lime_result))
-    show_plot(lime_negative_chart(lime_result))
+show_plot(lime_positive_chart(lime_result))
+show_plot(lime_negative_chart(lime_result))
 
 
 # =====================================================
-# REPORT & RAW DATA
+# RAW DATA
 # =====================================================
 
-with tab4:
+st.divider()
 
-    with st.expander("Raw Developer Data", expanded=False):
-        st.json(result)
+with st.expander("Raw Developer Data", expanded=False):
+    st.json(result)
