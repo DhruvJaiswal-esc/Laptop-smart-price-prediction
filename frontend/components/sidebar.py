@@ -204,13 +204,13 @@ def latest_result():
         unsafe_allow_html=True
     )
 
-    col1, col2 = st.sidebar.columns(2)
-
-    with col1:
-        st.metric("Price", f"₹{prediction['predicted_price']:,.0f}")
-
-    with col2:
-        st.metric("Category", prediction["predicted_category"])
+    # Stacked, not side-by-side columns - two st.metric widgets in a
+    # sidebar.columns(2) squeeze against each other and wrap/overlap
+    # once the price value gets wide (e.g. ₹1,45,000 in mono at 28px).
+    # Full sidebar width per metric keeps both always fully legible
+    # regardless of price length or sidebar width.
+    st.sidebar.metric("Price", f"₹{prediction['predicted_price']:,.0f}")
+    st.sidebar.metric("Category", prediction["predicted_category"])
 
     st.sidebar.markdown("<div style='margin-top:2px'></div>", unsafe_allow_html=True)
 
