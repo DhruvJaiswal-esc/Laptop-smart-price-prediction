@@ -281,14 +281,20 @@ def render_sidebar():
     
     st.sidebar.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
     
-    # Dark mode toggle. session_state (not the widget's own key) is
-    # what survives Streamlit's per-page script reruns in this
-    # multipage app - see the note above initialize_session().
+    # Dark mode toggle. Bound directly to its own widget key
+    # (theme_state) rather than passed a separate value= argument -
+    # value= and a widget's own state fighting over the same variable
+    # is what caused the old lag/double-click bug: on click, Streamlit
+    # reran the script with the *old* stored value still being fed
+    # back in as value= before this line had a chance to update it,
+    # racing against the widget's own pending click state. Reading
+    # st.session_state.theme_state after the widget call (never
+    # assigning into it, never passing value=) removes that race
+    # entirely - the widget key IS the state, full stop.
     if "theme_state" not in st.session_state:
         st.session_state.theme_state = False
 
-    is_dark = st.sidebar.toggle("🌗 Dark Mode", value=st.session_state.theme_state)
-    st.session_state.theme_state = is_dark
+    st.sidebar.toggle("🌗 Dark Mode", key="theme_state")
 
     # Every color is already defined for both themes as CSS variables
     # in style.css (.stApp default vs the block below). Streamlit
